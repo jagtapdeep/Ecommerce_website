@@ -1,0 +1,173 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% load reviews %}
+{% load filter %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/filter.css' %}">
+{% endblock styles %}
+
+
+{% block title%}Category{% endblock title%}
+
+{% block content %}
+<div class="container-fluid">
+    <p class="mt-3 mx-3 ti_fo">
+        {% if subcate %}
+        {{subcate}}
+        {% else %}
+        {{cate}}
+        {% endif %}
+    </p>
+    <hr color="black">
+    <div class="row">
+        <div class="col-sm-3 col-md-3 col-lg-3 mt-2">
+            <div>
+                <form action="">
+                    <div class="p-4 boor">
+                        <!-- <div>
+                            <h4>Filter By Price</h4>
+                            <hr color="black" class="mr-1">
+                            <div class="slidecontainer">
+                            <label for="myRange">300</label>  
+                            <label style="float: right;" for="myRange">700</label>                                
+                                <input type="range" step="50" value="700" min="300" max="700" class="slider" id="myRange" name="range">
+                            </div>
+                        </div> -->
+
+
+                        {% if cate|category:'Cloths' %}
+                        <div class="mt-0">
+                            <h4 class="brand_name">Filter By Brand</h4>
+                            <hr color="black" class="mr-1">
+                            <div class="brand_content" style="display: none;" >
+                                <input type="checkbox" id="ywc" name="ywc" value="YWC">
+                                <label for="ywc">YWC</label><br>
+                                <input type="checkbox" id="nike" name="nike" value="Nike">
+                                <label for="nike">NIKE</label><br>
+                                <input type="checkbox" id="	Monte Carlo" name="Monte_Carlo" value="Monte Carlo">
+                                <label for="Monte Carlo">Monte Carlo</label><br>
+                                <input type="checkbox" id="Louis Philippe" name="Louis_Philippe" value="Louis Philippe">
+                                <label for="Louis Philippe">Louis Philippe</label><br>
+                                <input type="checkbox" id="	Peter England" name="Peter_England" value="Peter England">
+                                <label for="Peter England"> Peter England</label><br>
+                                <input type="checkbox" id="Allen Solly" name="Allen_Solly" value="Allen Solly">
+                                <label for="Allen Solly">Allen Solly</label><br>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if cate|category:'Electronics' %}
+                        <div class="mt-0">
+                            <h4 class="brand_name">Filter By Brand</h4>
+                            <hr color="black" class="mr-1">
+                            <div class="brand_content" style="display: none;" >
+                                <input type="checkbox" id="fastrack" name="fastrack" value="Fastrack">
+                                <label for="fastrack">Fastrack</label><br>
+                                <input type="checkbox" id="tv" name="sony" value="Sony">
+                                <label for="tv">SONY</label><br>
+                                <input type="checkbox" id="samsung" name="samsung" value="Samsung">
+                                <label for="samsung">Samsung</label><br>
+                                <input type="checkbox" id="i_phone" name="iphone" value="I Phone">
+                                <label for="i_phone">I Phone</label><br>
+                                <input type="checkbox" id="realme" name="realme" value="Realme">
+                                <label for="realme">RealMe</label><br>
+                                <input type="checkbox" id="redmi" name="redmi" value="Redmi">
+                                <label for="redmi">Redmi</label><br>
+                            </div>
+                        </div>
+
+                        {% endif %}
+
+                        <!-- <input type="checkbox" id="vehicle1">
+                            <label>{{brand}}</label><br> -->
+
+
+
+                        <div class="mt-5">
+                            <h4 class="filter_name">Filter By Rating</h4>
+                            <hr color="black" class="mr-1">
+                            <div class="filter_content" style="display: none;" >
+                                <input type="checkbox" id="vehicle1" name="four" value="4">
+                                <label for="vehicle1"> 4 star & above</label><br>
+                                <input type="checkbox" id="vehicle1" name="three" value="3">
+                                <label for="vehicle2"> 3 star & above</label><br>
+                                <input type="checkbox" id="vehicle1" name="two" value="2">
+                                <label for="vehicle3"> 2 star & above</label><br>
+                                <input type="checkbox" id="vehicle1" name="one" value="1">
+                                <label for="vehicle3"> 1 star & above</label><br>
+                            </div>
+                        </div>
+
+                        <div class="mt-5">
+                            <h4 class="offer_name">Filter By Offer</h4>
+                            <hr color="black" class="mr-1">
+                            <div class="offer_content" style="display: none;" >
+                                <label for="offer">Offer :-</label>
+                                <input type="number" class=" in_con px-3" max="99" min="1" name="offer" id="offer">
+                            </div>
+                        </div>
+                        <input class="my-4 py-1 px-5 vi_btn" type="submit" value="Apply">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-9 col-sm-9 col-lg-9">
+            <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 my-5">
+                {% if products %}
+                {% for product in products %}
+                <div class="col mb-5">
+                    <div style="width: 18rem;" class="mx-auto">
+                        <img src="{{product.images.url}}" style="width: 250x; height: 250px; border: 1px solid black;"
+                            class="mx-auto p-3 card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{product.name}}</h5>
+                            <br>
+                            <h3 style="font-family: serif;">Price :- ₹ {{product.price|offer_price:product.offer}}</h3>
+                            <p class="card-text">{{product.description}}</p>
+                            <div>
+                                <a href="{% url 'addtocart' product.id %}" type="button"
+                                    class="my-4 pt-1 px-3 vi_btn">Add
+                                    To Cart</a>
+                                <a href="{% url 'productview' product.id %}" type="button"
+                                    class="my-4 pt-1 px-3 vi_btn">View Product</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="mt-5 mb-5 mx-auto col-md-9 ">
+
+                    <img src="{% static 'images/question.jpg' %}" alt="No Result Found" srcset="" style="width: 350px;">
+                    <h3 class="mt-5 ml-5" style="color: red; width: 400px;">Sorry, no results found!</h3>
+                </div>
+                {% endif %}
+            </div>
+            <!-- <div class="hh" style="position: fixed; top: 100%; right: 0; width: 200px; height: 100px;
+            border: 3px solid #73AD21;">
+                <a href="#upp" class="hh">up</a>
+            </div> -->
+            <!-- <div class="relative" style=" position: relative; width: 400px; height: 200px;border: 3px solid #73AD21;">This div element has position: relative;
+                <div class="absolute" style="position: absolute; top: 80px; right: 0; width: 200px; height: 100px;
+                border: 3px solid #73AD21;">This div element has position: absolute;</div>
+              </div> -->
+
+        </div>
+    </div>
+    <div style="position: absolute; left: 95%; bottom: 5%; position: fixed;">
+        <a href="#up"><img src="{% static 'images/arrow-up.svg' %}" alt="" srcset=""></a>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+{% block script %}
+
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
+
+<script src="{% static 'javascript/filter.js' %}"></script>
+
+{% endblock script %}

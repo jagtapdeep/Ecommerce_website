@@ -1,0 +1,41 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/signup.css' %}">
+{% endblock styles %}
+
+{% block title%}Profile{% endblock title%}
+
+{% block content %}
+
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-success" role="alert">
+        {{message}}
+      </div>
+    {% endfor %}
+{% endif %}
+<div class="container">
+    {% if error_message %}
+        <div class="alert alert-danger" role="alert">
+            {{error_message}}
+        </div>
+    {% endif %}
+    <div class="flex-container">
+            <div class="py-5 ml-4">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <h3 class="head_log ml-3 mb-5">Change Password</h3>
+                    {% for fm in form %} <br>
+                    <p class="p-0 my-0"><b>{{fm.label_tag}}</b></p> {{fm}} <br>
+                    {% endfor %} <br>
+                    <button class="px-4 py-1 my-3 vi_btn" type="submit">Update</button>
+                    <a href="{% url 'changepass2' %}" class="px-3 py-2 my-3 mx-3 vi_btn">Try Another Way</a>
+                </form>
+            </div>
+    </div>
+</div>
+
+
+{% endblock content %}

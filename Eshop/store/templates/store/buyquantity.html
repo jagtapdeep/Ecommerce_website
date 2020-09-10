@@ -1,0 +1,62 @@
+{% extends 'store/base.html' %}
+
+{% block style %}
+
+<style>
+    .main {
+        width: 300px;
+    }
+
+    .cont {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 85vh;
+        flex-wrap: wrap;
+    }
+    .input_qu{
+        width: 230px;
+        border: 2px solid white;;
+        border-bottom: 2px solid black;
+    }
+    .input_qu:focus{
+        outline: none;
+    }
+    .shop{
+        width: 200px;
+        height: 200px;
+        display: flex;
+    }
+    .but{
+        width: 150px;
+        margin-left: 35px;
+    }
+    
+</style>
+
+{% endblock style %}
+
+{% block title%}Order{% endblock title%}
+
+{% block content %}
+<div class="cont">
+    <div class="box">
+        <div class="m-4 p-4 main">
+            <div>
+                <img src="{{product.images.url}}" alt="" class="mx-auto shop">
+            </div><hr color="black">
+            <div  style="display: flex;">
+                <form action="" method="post" novalidate class="mx-auto">
+                    {% csrf_token %}
+                    <h4 class="mx-auto" style="width: 250px;">{{product.name}}</h4>
+                    <label for="quantity">Quantity:</label>
+                    <input type="text" name="quantity" class="input_qu" id=""> <br><br>
+                    <input class="px-4 py-1 my-1 vi_btn" style="margin-left: 70px;" type="submit" value="Submit">
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

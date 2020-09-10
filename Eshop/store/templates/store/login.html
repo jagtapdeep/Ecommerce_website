@@ -1,0 +1,33 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock style %}
+
+{% block title%}Login{% endblock title%}
+
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-success" role="alert">
+        {{message}}
+      </div>
+    {% endfor %}
+{% endif %}
+<div class="container">
+    <div class="flex-container">
+            <div class="py-5">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <h3 class="head_log">LOGIN</h3>
+                    <input type="text" id="text" class="my-3 in_con px-3" placeholder="Enter Your Username" name="username"><br>
+                    <input type="password" id="pass" class="my-3 in_con px-3" placeholder="Enter Password" name="pass"> <br>
+                    <!-- <input type="search" class="bor_bo mr-4 pl-2" placeholder="Search" name="" id=""> -->
+                    <button class="px-4 py-1 my-3 vi_btn" style="margin-left: 100px;" type="submit">Login</button>
+                </form>
+            </div>
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,68 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block styles %}
+<style>
+    input {
+        border: 2px solid white;
+        border-bottom: 2px solid black;
+        width: 250px;
+        /* margin-left: 35px; */
+    }
+
+    input:focus {
+        outline: none;
+    }
+
+    .cont {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 90vh;
+        flex-wrap: wrap;
+    }
+    .head_log{
+        width: 200px; 
+        /* text-align: center; 
+        margin-left: 25px;  */
+        margin-bottom: 25px;
+    }
+</style>
+<link rel="stylesheet" href="{% static 'css/signup.css' %}">
+{% endblock styles %}
+
+{% block title%}Sign Up{% endblock title%}
+
+
+{% block content %}
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-success" role="alert">
+    {{message}}
+</div>
+{% endfor %}
+{% endif %}
+<div class="container">
+    {% if error_message %}
+    <div class="alert alert-danger" role="alert">
+        {{error_message}}
+    </div>
+    {% endif %}
+    <div>
+        <div class="py-5 cont">
+            <form action="" method="post" novalidate>
+                {% csrf_token %}
+                <h3 class="head_log pr-5">SIGN UP</h3>
+                {% for fm in form %}
+                {{fm.label_tag}} <br>
+                {{fm}} <br><br>
+                {% endfor %}
+                <button class="px-4 py-1 my-3 vi_btn" style="margin-left: 70px;" type="submit">Sign Up</button>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

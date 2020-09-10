@@ -1,0 +1,135 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: 'Cormorant', serif;
+}
+dl, ol, ul {
+    margin-top: 0;
+    margin-bottom: 0rem;
+}
+.menu-bar{
+    background-color: black;
+    text-align: left;
+    width: 100%;
+}
+.menu-bar ul{
+    display: inline-flex;
+    list-style: none;
+    color: white;
+}
+.menu-bar ul li {
+    margin: 0px 20px;
+    padding: 5px;
+    /* color black is not apply */
+    color: black;
+}
+.menu-bar ul li a{
+    text-decoration: none;
+    color: white;
+}
+.menu-bar ul li:hover{
+    color: white;
+}
+/* .menu-bar ul li:hover a{
+    color:black;
+} */
+.sub-class-1{
+    display: none;
+    border: 1px solid rgb(223, 220, 220);
+    border-radius: 5px;
+}
+.menu-bar ul li:hover .sub-class-1{
+    display: block;
+    position: absolute;
+    background-color: white;
+    margin-left: 0;
+    margin-top: 5px;
+}
+.menu-bar ul li:hover .sub-class-1 ul{
+    display: block;
+    text-align: left;
+    padding: 10px 0px;
+}
+.menu-bar ul li:hover .sub-class-1 ul li{
+    /* width: 100px; */
+    margin: 0px;
+    padding: 5px 50px;
+    padding-left: 15%;
+}
+.menu-bar ul li:hover .sub-class-1 ul li a{
+    color: black;
+}
+.menu-bar ul li:hover .sub-class-1 ul li:hover{
+    background-color: grey;
+}
+.menu-bar ul li:hover .sub-class-1 ul li:hover a{
+    color: white;
+}
+.sub-class-2{
+    color: black;
+    display: none;
+    border: 1px solid rgb(223, 220, 220);
+    border-radius: 5px;
+}
+.hover-me:hover .sub-class-2{
+    display: block;
+    position: absolute;
+    margin-left: 105px;
+    margin-top: -20px;
+    background-color: white;
+}
+.menu-bar ul li:hover .sub-class-1 ul .hover-me:hover .sub-class-2 ul li a{
+    color: black;
+}
+.menu-bar ul li:hover .sub-class-1 ul .hover-me:hover .sub-class-2 ul li:hover a{
+    color: white;
+}
+.fon_co {
+    margin-left: 20px;    
+    color: white;
+}
+.fon_co:hover{
+    color: rgb(202, 199, 199);
+}
+.bg{
+    background: black;
+}
+.bor_bo{
+    background: black;
+    /* background-image: url(search.svg);
+    background-repeat: no-repeat;
+    padding-left: 20px; */
+    border: none;
+    border-bottom: 2px solid white;
+    color: white;
+}
+.bor_bo:focus{
+    outline: none;
+}
+.but_bg{
+    background: white;
+    color: black;
+    border:2px solid white;
+    border-radius: 3px;
+    font-weight: 500;
+}
+.dr_bg:hover{
+    background-color: silver;
+}
+.vi_btn{
+    border: 1px solid black; 
+    color:black;  
+    background: white;          
+}
+.vi_btn:hover{
+    border: 1px solid white;
+    color: white;
+    background-color: black;
+    text-decoration: none;
+}
+.dropdown:hover .dropdown-menu{
+    display: block;
+}
+element.style{
+    margin-left: 30px;
+}

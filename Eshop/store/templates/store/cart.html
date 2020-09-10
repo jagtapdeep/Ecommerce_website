@@ -1,0 +1,99 @@
+{% extends 'store/base.html' %}
+{% load reviews %}
+{% load cart %}
+
+{% block styles %}
+
+<style>
+    .mar {
+        padding-top: 5px;
+    }
+
+    .n {
+        color: white;
+        background-color: rgb(236, 96, 2);
+    }
+
+    .bor_bot {
+        border-bottom: 2px solid black;
+    }
+</style>
+
+{% endblock styles %}
+
+{% block title %}Cart{% endblock title %}
+
+{% block content %}
+{% if usercarts %}
+<div class="table-responsive">
+    <div class="container">
+        <div class="mx-4 my-5">
+            <div class="ml-4 pl-4  mt-5 mb-4">
+                <h1>Your Cart</h1>
+            </div>
+            <table class="table mx-auto" style="width: 900px;">
+                <thead style="width: 400px;">
+                    <tr style="text-align: center;">
+                        <th style="border-bottom: 2px solid black; border-top: 2px solid black; ">Image</th>
+                        <th style="border-bottom: 2px solid black; border-top: 2px solid black; ">Product Name</th>
+                        <th style="border-bottom: 2px solid black; border-top: 2px solid black; ">Price</th>
+                        <th style="border-bottom: 2px solid black; border-top: 2px solid black; ">Quantity</th>
+                        <th style="border-bottom: 2px solid black; border-top: 2px solid black; ">Total Price</th>
+                        <th style="border-bottom: 2px solid black; border-top: 2px solid black; ">Buy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    {% for i in usercarts %}
+                    {% for usercart,vaue in i.items %}
+                    {% if product.id == usercart|to_int %}
+                    <tr style="text-align: center;">
+                        <td class="bor_bot"><img src="{{product.images.url}}" alt="" style="width: 50px; height: 50px;"
+                                class="rounded-circle"></td>
+                        <td class="bor_bot pt-4">{{product.name}}</td>
+                        <td class="bor_bot pt-4">₹ {{product.price|offer_price:product.offer}}</td>
+                        <td class="bor_bot pt-4">{{vaue}}</td>
+                        <td class="bor_bot pt-4">₹ {{vaue|total_price:product.price|offer_price:product.offer}}</td>
+                        {% if product.quantity|available %}
+                        <td class="bor_bot pt-4"><a href="{% url 'order' product.id %}" type="button"
+                                class="mx-0 m1-2 pt-1 px-4 vi_btn">Buy</a></td>
+                        {% else %}
+                        <td class="bor_bot">Out Of Stock</td>
+                        {% endif %}
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    {% endfor %}
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="container">
+    <div class="mx-auto m-5 " style="width: 400px;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Shopping_cart_with_food_clip_art_2.svg/307px-Shopping_cart_with_food_clip_art_2.svg.png"
+            alt="">
+    </div>
+    <div class="mx-auto" style="width: 400px;">
+
+        <h1>Nothing In Cart</h1>
+    </div>
+</div>
+{% endif %}
+
+
+<!-- {% for product in products %}
+        {% for usercart,vaue in usercarts.items %}
+            {% if product.id == usercart|to_int %}
+                {{product.name}} 
+                {{vaue}}
+                <p>price: {{product.price}}</p>
+                <p>{{vaue|total_price:product.price}}</p>
+            {% endif %}
+        {% endfor %}
+    {% endfor %} -->
+
+{% endblock content %}

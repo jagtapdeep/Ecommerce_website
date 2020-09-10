@@ -1,0 +1,40 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/signup.css' %}">
+{% endblock style %}
+
+{% block title%}Order Form{% endblock title%}
+
+{% block content %}
+
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-success" role="alert">
+        {{message}}
+      </div>
+    {% endfor %}
+{% endif %}
+<div class="container">
+    {% if error_message %}
+        <div class="alert alert-danger" role="alert">
+            {{error_message}}
+        </div>
+    {% endif %}
+    <div class="flex-container">
+            <div class="py-5">
+                <form action="" method="post" novalidate>
+                    {% csrf_token %}
+                    <h3 class="head_log">ORDER</h3>
+                    {% for fm in form %}
+                    <p class="mx-3 p-0 my-0"><b>{{fm.label_tag}}</b></p> {{fm}} <br>
+                    {% endfor %}
+                    <button class="px-4 py-1 my-3 vi_btn" style="margin-left: 120px;" type="submit">Buy</button>
+                </form>
+            </div>
+    </div>
+</div>
+
+
+{% endblock content %}
