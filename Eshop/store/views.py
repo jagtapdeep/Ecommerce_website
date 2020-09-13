@@ -301,22 +301,25 @@ def addtocart(request,id):
     print('user__id',user__id)
     mn = cache.get('user_cartt', 0,version=user__id)
     print('mn',mn)
-    if mn == 0:
+    if mn == 0 or mn == None:
         pass
     else:
         request.session['q'] = mn
+        print(q)
         bb = request.session.get('q')
         print('bb',bb)
     q = request.session.get('q')
+    print('ky matter ahe',q)
     if not q:
-        # q = {}
         request.session['q'] = []
         nn = request.session.get('q')
         print('nn',nn)
     else:
         q = request.session.get('q')
+    print('ky matter ahe',q)
     if request.method == 'POST':
         product_id = int(id)
+        print('product_idhhhhhhhhhhhhhhhhhhhhhhhhhhh',product_id)
         idd = product_id
         print(type(product_id))
         products = Product.objects.get(pk=id)
@@ -325,13 +328,30 @@ def addtocart(request,id):
         print(quantity)
         quantity = int(quantity)
         products.id = request.session.get(products.id)
+
+        # print(quantity)
+        # quantity = int(quantity)
+        # products.id = request.session.get(products.id)
+        # if products.id:
+        #     pass
+        # else:
+        #     product_id = {}
+        #     product_id[idd] = quantity
+        # print(product_id)
+        # print(q)
+        # q.append(product_id)
+        # print(q)
+        # request.session['q'] = q
+        # q = request.session.get('q')
+
         if products.id:
+            print('inside product.id',product.id)
             pass
         else:
             product_id = {}
             product_id[idd] = quantity
         print(product_id)
-        print(q)
+        print(type(q))
         q.append(product_id)
         print(q)
         request.session['q'] = q
@@ -613,10 +633,12 @@ def subfilter(request,id):
 
     for products in product:
         cate = products.category
+        print('catteeeeeeeeee',cate)
         break
     
     for products in product:
         subcate = products.subcategory
+        print(subcate)
         break
 
     g = []
@@ -656,9 +678,9 @@ def subfilter(request,id):
  
     if four or three or two or one or offer or ranges or g:
         filter_product = forfilter(g,four,ranges,three,two,one,offer,filter_product,product)
-        return render(request,'store/filter.html',{'cate':cate, 'subcate':subcate, 'products':filter_product,'categories':category, 'subcates':subcates})
+        return render(request,'store/filter.html',{'cate':subcate,'products':filter_product,'categories':category, 'subcates':subcates})
     else:   
-        return render(request,'store/filter.html',{'cate':cate , 'subcate':subcate, 'products':product,'categories':category, 'subcates':subcates})
+        return render(request,'store/filter.html',{'products':product,'categories':category, 'cate':subcate,'subcates':subcates})
 
 def forfilter(g,four,ranges,three,two,one,offer,filter_product,product):
     if g:
