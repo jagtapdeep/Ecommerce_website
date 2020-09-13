@@ -13,7 +13,7 @@
     <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2">
         <div class="col">
             <div class="mx-auto">
-                <img src="{{products.images.url}}" class="my-0 px-4 img_pro" alt="" srcset="">
+                <img src="{{products.images.url}}" data-zoom-image="{{products.images.url}}" id="zoom" class="my-0 px-4 img_pro" alt="" srcset="">
             </div>
         </div>
         <div class="col">
@@ -140,3 +140,13 @@
         </div>
     {% endif %}
 {% endblock content %}
+
+{% block script %}
+
+    <script src="{% static 'javascript/js/jquery.elevateZoom-3.0.8.min.js' %}"></script>
+
+	<script>
+		$("#zoom").elevateZoom();
+	</script>
+
+{% endblock script %}

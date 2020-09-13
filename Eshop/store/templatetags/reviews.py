@@ -42,3 +42,7 @@ def length(list_len):
         return False
     else:
         return True
+
+@register.filter(name='offer_total_price')
+def offer_total_price(product_price,product_quantity):
+    return product_price * product_quantity

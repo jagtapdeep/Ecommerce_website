@@ -11,9 +11,12 @@ from django.contrib.auth.models import User
 from .forms import Reviewform
 from .models.review import Review
 from django.core.cache import cache
+from easy_pdf.views import PDFTemplateResponseMixin
+from django.views.generic import DetailView
 
 
 # Create your views here.
+subcates = SubCategory.objects.all()
 def index(request):
     q = request.session.get('q')
     # print('cart',carts)
@@ -30,58 +33,25 @@ def index(request):
     print('user__id',user__id)
     mn = cache.get('user_cartt', 0,version=user__id)
     print('mn',mn)
-    i=0
     m = []
     n = []
     p = []
     # m = Product.objects.all().filter(rating=4)
     for products in product:
         if products.offer >= 30:
-            i=i+1
-            # print(products.name)
             m.append(products)                       
-            if i==4:
-                # print(m) 
-                break               
-            else:
-                pass
         
-    
-    # for products in product:
-    #     if products.offer >=30 :
-    #         m.add(products)
-    # print(m)
-    # q = set()
-    # i = 0
-    # for l in m:
-    #     i = i+1
-    #     if i == 5:
-    #         break
-    #     else:
-    #         q.add(l)
-    # print(q)
-
-    j=0            
     for products in product:
         if products.rating >= 4:
-            j = j +1
             n.append(products)
-            if j==4:
-                break
-            else:
-                pass                      
-    k = 0
+                      
     for products in product:
         if products.battery >= 5000:
-            k = k+1
             p.append(products)
-            if k==4:
-                break
-            else:
-                pass
+
     # aa = Product.objects.filter(subcategory == 'Mens')
     subcates = SubCategory.objects.all()
-    return render(request,'store/index.html',{'products':product,'categories':category,'ms':m,'ns':n,'ps':p , 'subcates':subcates})
+    return render(request,'store/index.html',{'products':product,'categories':category,'ms':m[:4],'ns':n[:4],'ps':p[:4] , 'subcates':subcates})
 
 def filter(request,id):
     filter_product = []
@@ -150,6 +120,7 @@ def filter(request,id):
 
 def signup(request):
     category = Category.objects.all()
+    subcates = SubCategory.objects.all()
     if request.method == "POST":        
         fm = Signupform(request.POST)
         if fm.is_valid():
@@ -159,10 +130,11 @@ def signup(request):
 
     else:       
         fm = Signupform()
-    return render(request,'store/signup.html',{'form':fm,'categories':category})
+    return render(request,'store/signup.html',{'form':fm,'categories':category, 'subcates':subcates})
 
 def user_login(request):
     category = Category.objects.all()
+    subcates = SubCategory.objects.all()
     if not request.user.is_authenticated:
         if request.method == 'POST':
             username = request.POST.get('username')
@@ -186,12 +158,13 @@ def user_login(request):
                 return HttpResponseRedirect('/login/')
                         
         else:
-            return render(request,'store/login.html',{'categories':category})
+            return render(request,'store/login.html',{'categories':category, 'subcates':subcates})
     else:
         return HttpResponseRedirect('/')
 
 def profile(request):
     category = Category.objects.all()
+    subcates = SubCategory.objects.all()
     if request.user.is_authenticated:
         if request.method == "POST":
             fm = Edituserform(instance=request.user, data=request.POST)
@@ -201,12 +174,13 @@ def profile(request):
                 return HttpResponseRedirect('/')
         else:    
             fm = Edituserform(instance=request.user)
-        return render(request,'store/profile.html',{'form':fm,'categories':category})
+        return render(request,'store/profile.html',{'form':fm,'categories':category, 'subcates':subcates})
     else:
         return HttpResponseRedirect('/login/')
 
 def changepass(request):
     category = Category.objects.all()
+    subcates = SubCategory.objects.all()
     if request.user.is_authenticated:
         if request.method == 'POST':
             fm = PasswordChangeForm(user=request.user,data=request.POST)
@@ -230,7 +204,7 @@ def changepass1(request):
                 messages.info(request,'Password Change Successfully')
         else:
             fm = SetPasswordForm(user=request.user)
-        return render(request,'store/changepass2.html',{'form':fm,'categories':category})
+        return render(request,'store/changepass2.html',{'form':fm,'categories':category, 'subcates':subcates})
     
     else:
         return HttpResponseRedirect('/login/')
@@ -314,10 +288,10 @@ def productview(request,id):
             feedback = Review.objects.all()            
             print(Review.id)
 
-        return render(request,'store/productview.html',{'products':products,'categories':category,'form':fm,'feedbacks':feedback,'customer_names':customer_name,'ms':m})
+        return render(request,'store/productview.html',{'products':products,'categories':category,'form':fm,'feedbacks':feedback,'customer_names':customer_name,'ms':m, 'subcates':subcates})
     
     else:
-        return render(request,'store/productview.html',{'products':products,'categories':category,'ms':m})
+        return render(request,'store/productview.html',{'products':products,'categories':category,'ms':m, 'subcates':subcates})
 
 def addtocart(request,id):
     category = Category.objects.all()
@@ -377,7 +351,7 @@ def addtocart(request,id):
     else:
         carts = request.session.get('carts')
         products = Product.objects.get(pk=id)
-    return render(request,'store/addtocart.html',{'product':products ,'categories':category})
+    return render(request,'store/addtocart.html',{'product':products ,'categories':category, 'subcates':subcates})
 
 def user_cart(request):
     category = Category.objects.all()
@@ -397,7 +371,7 @@ def user_cart(request):
         
     products = Product.objects.all()  
     category = Category.objects.all()  
-    return render(request,'store/cart.html',{'usercarts':q,'products':products,'categories':category})
+    return render(request,'store/cart.html',{'usercarts':q,'products':products,'categories':category, 'subcates':subcates})
     
 def search(request):
     category = Category.objects.all()
@@ -408,13 +382,13 @@ def search(request):
         # perform AND operation
         # match = Product.objects.filter(name__icontains=search).filter(description__icontains=search)
         if match:
-            return render(request,'store/search.html',{'products':match,'categories':category})    
+            return render(request,'store/search.html',{'products':match,'categories':category, 'subcates':subcates})    
         else:
             content = 'No Result Found'
-            return render(request,'store/search.html',{'content':content,'categories':category})
+            return render(request,'store/search.html',{'content':content,'categories':category, 'subcates':subcates})
     else:
         content = 'Please Enter Something in Search Box'
-        return render(request,'store/search.html',{'content':content,'categories':category})
+        return render(request,'store/search.html',{'content':content,'categories':category, 'subcates':subcates})
 
 def order(request,id):
     category = Category.objects.all()
@@ -451,6 +425,7 @@ def order(request,id):
                 product_names = product
                 print(product.id)
                 names = custo
+                # print('names',names.first_name)
                 prices  = product.price
                 quantitys = fm.cleaned_data['quantity']
                 print('hello',quantitys)
@@ -545,7 +520,7 @@ def order(request,id):
                             #         del a
                             # del request.session['carts']
                         detail = Userorder.objects.all()
-                        return render(request,'store/order.html',{'products':detail,'nm':names,'categories':category,'availables':available})
+                        return render(request,'store/order.html',{'products':detail,'nm':names,'categories':category,'availables':available, 'subcates':subcates})
                     else:
                         messages.warning(request,'not available')
                 else:
@@ -571,7 +546,7 @@ def orders(request):
     names = custo
     print(names)
     detail = Userorder.objects.all()
-    return render(request,'store/order.html',{'products':detail,'nm':names,'categories':category})
+    return render(request,'store/order.html',{'products':detail,'nm':names,'categories':category, 'subcates':subcates})
     # for i in detail:
     #     if i.customer == custo:
     #         return render(request,'store/order.html',{'products':detail,'nm':names,'categories':category})
@@ -587,7 +562,7 @@ def top_offer(request):
     for product in products:
         if product.offer > 0:
             product_offer.append(product)
-    return render(request,'store/top_offer.html',{'products':product_offer,'categories':category,'about':about})
+    return render(request,'store/top_offer.html',{'products':product_offer,'categories':category,'about':about, 'subcates':subcates})
 
 def best_battery(request):
     products = Product.objects.all()
@@ -597,7 +572,7 @@ def best_battery(request):
     for product in products:
         if product.battery > 4000:
             product_battery.append(product)
-    return render(request,'store/top_offer.html',{'products':product_battery,'categories':category,'about':about})
+    return render(request,'store/top_offer.html',{'products':product_battery,'categories':category,'about':about, 'subcates':subcates})
 
 def top_rated(request):
     products = Product.objects.all()
@@ -607,10 +582,11 @@ def top_rated(request):
     for product in products:
         if product.rating > 4:
             product_rated.append(product)
-    return render(request,'store/top_offer.html',{'products':product_rated,'categories':category,'about':about})
+    return render(request,'store/top_offer.html',{'products':product_rated,'categories':category,'about':about, 'subcates':subcates})
 
 def buyquantity(request,id):
     product = Product.objects.get(pk=id)
+    category = Category.objects.all()
     if request.method == "POST":
         fm = Userorderform()
         quantity = request.POST['quantity']
@@ -625,7 +601,7 @@ def buyquantity(request,id):
         print(products)
         return HttpResponseRedirect('/onlinebuy/')
     else:
-        return render(request,'store/buyquantity.html',{'product':product})
+        return render(request,'store/buyquantity.html',{'product':product,'categories':category, 'subcates':subcates})
 
 def onlinebuy(request):
     return render(request,'store/onlineby.html')
@@ -764,3 +740,8 @@ def delete(request,id):
 def del_account(request,id):
     custo = User.objects.get(pk = id).delete()
     return HttpResponseRedirect('/')
+
+class pdfdetail(PDFTemplateResponseMixin,DetailView):
+    template_name = 'store/pdf.html'
+    context_object_name = 'order'
+    model = Userorder

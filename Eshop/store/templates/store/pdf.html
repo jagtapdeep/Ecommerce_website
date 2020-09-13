@@ -1,0 +1,113 @@
+{% load static %}
+{% load reviews %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>Document</title>
+    <style>
+        .order {
+            font-size: 25px;
+        }
+
+        .h {
+            margin-top: 20px;
+        }
+
+        .hr {
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1 class="order">Order Details :-</h1>
+        <h1>Order On {{order.date}}</h1>
+        <h1>Order ID :- # {{order.id}}</h1>
+    </div>
+
+    <hr class="hr">
+
+    <h1 class="h">Shipping Address :- {{order.address}}</h1>
+    <h1 class="h">Pin Code :- {{order.pincode}}</h1>
+
+    <hr>
+    <h1 class="h">Payment Method :- Cash On Delivery</h1>
+
+    <hr>
+
+    <div class="customer_content">
+        <h1 style="font-size: 18px; margin-top: 40px;">Order Summary :-</h1>
+        <h1>Customer Name :-  {{order.customer.first_name}} {{order.customer.last_name}}.</h1>
+        <h1>Product Name :- {{order.product.name}}.</h1>
+        <h1>Product Price :- Rs. {{order.price|offer_price:order.offer}}</h1>
+        <h1>Product Offer :- {{order.offer}}%</h1>
+        <h1>Quantity :- {{order.quantity}}</h1>
+        <h1 style="font-size: 18px; color: red;">Total Price :- Rs. {{order.price|offer_total_price:order.quantity}}
+        </h1>
+    </div>
+
+    <hr class=".hr">
+
+    <div class="product_content">
+        <h1 style="font-size: 18px; margin-top: 40px;">Product Details :-</h1>
+        <h1>Product Name :- {{order.product.name}}</h1>
+        <h1>Product Description :- {{order.product.description}}</h1>
+        <h1>Product Price :- Rs. {{order.price}}</h1>
+        <h1>Product offer :- {{order.product.offer}}%</h1>
+        <h1>Product Rating :- {{order.product.rating}}</h1>
+
+    </div>
+
+    <hr>
+    <div style="">
+        <a href="http://127.0.0.1:8000/productview/{{order.product.id}}"
+            style="text-decoration: none; font-size: 20px; display: block;" target="_blank">Buy Product Again</a>
+        <a href="http://127.0.0.1:8000/productview/{{order.product.id}}"
+            style="text-decoration: none; font-size: 20px; display: block;" target="_blank">Write a Product Review</a>
+        <a href="http://127.0.0.1:8000/orders/" style="text-decoration: none; font-size: 20px; display: block;" target="_blank">
+            Your Order</a>
+    </div>
+
+    <h1 style="font-size: 30px; text-align: center;">Thank You For Shoping. We are always here for your help.</h1>
+
+    <h1>Customer Care No. :- 8763878</h1>
+
+    <h1 style="margin-top: 40px;">Rules and Regulations</h1>
+    <ol>
+        <li> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti error suscipit quaerat, nostrum aliquid
+            deserunt molestias nihil mollitia voluptates amet sit pariatur dignissimos consequatur quibusdam obcaecati
+            omnis? Suscipit, laudantium rerum.</li>
+        <li> Lorem, ipsum dolor sit amet consectetur adipisicing elit. At ab perspiciatis nobis, temporibus placeat
+            laborum quas itaque tempora eveniet architecto ratione quaerat atque ex sint! Asperiores molestiae deleniti
+            debitis hic.</li>
+        <li> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Error, expedita iure? Animi, dolor earum! Eius
+            eligendi explicabo ab aliquid nam!</li>
+        <li> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officia architecto tempora molestias ipsum
+            necessitatibus autem nulla labore. Accusantium iusto odio ipsam perspiciatis, praesentium tenetur amet
+            asperiores natus dolores possimus nesciunt.</li>
+    </ol>
+
+
+    <h1 style="color: red; margin-top: 20px;">Note :- The receipt is important. When you receiver your order at the time you have to show this receipt.</h1>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+</body>
+</body>
+
+</html>

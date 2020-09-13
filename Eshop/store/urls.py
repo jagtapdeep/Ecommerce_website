@@ -12,4 +12,5 @@ urlpatterns = [
     path('subfilter/<int:id>',views.subfilter,name='subfilter'), 
     path('delete/<int:id>',views.delete,name='delete'),  
     path('del_account/<int:id>',views.del_account,name='del_account'),  
+    path('pdf/<int:pk>',views.pdfdetail.as_view(),name='pdf'),
 ]
