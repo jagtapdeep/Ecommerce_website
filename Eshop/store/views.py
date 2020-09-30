@@ -2,7 +2,7 @@ from django.shortcuts import render,HttpResponseRedirect,HttpResponse
 from .models.product import Product
 from .models.category import Category, SubCategory
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm,UserChangeForm,PasswordChangeForm,SetPasswordForm
-from .forms import Signupform,Edituserform,Userorderform
+from .forms import Signupform,Edituserform,Userorderform,Productform,Productcategory, Productsubcategory
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from django.db.models import Q
@@ -19,6 +19,8 @@ from django.views.generic import DetailView
 subcates = SubCategory.objects.all()
 def index(request):
     q = request.session.get('q')
+    cache_value = cache.get('time','the time')
+    print('cache_value',cache_value)
     # print('cart',carts)
     # for cart in carts:
     #     print('onecart',cart)
@@ -35,7 +37,6 @@ def index(request):
     print('mn',mn)
     m = []
     n = []
-    p = []
     # m = Product.objects.all().filter(rating=4)
     for products in product:
         if products.offer >= 30:
@@ -45,13 +46,10 @@ def index(request):
         if products.rating >= 4:
             n.append(products)
                       
-    for products in product:
-        if products.battery >= 5000:
-            p.append(products)
 
     # aa = Product.objects.filter(subcategory == 'Mens')
     subcates = SubCategory.objects.all()
-    return render(request,'store/index.html',{'products':product,'categories':category,'ms':m[:4],'ns':n[:4],'ps':p[:4] , 'subcates':subcates})
+    return render(request,'store/index.html',{'products':product,'categories':category,'ms':m[:4],'ns':n[:4] , 'subcates':subcates})
 
 def filter(request,id):
     filter_product = []
@@ -114,9 +112,9 @@ def filter(request,id):
     print(ranges)
     if four or three or two or one or offer or ranges or g:
         filter_product = forfilter(g,four,ranges,three,two,one,offer,filter_product,product)
-        return render(request,'store/filter.html',{'cate':d, 'products':filter_product,'categories':category,'brands':b, 'subcates':subcates})
+        return render(request,'store/filters.html',{'cate':d, 'products':filter_product,'categories':category,'brands':b, 'subcates':subcates})
     else:
-        return render(request,'store/filter.html',{'products':product,'categories':category,'cate':d,'brands':b, 'subcates':subcates})
+        return render(request,'store/filters.html',{'products':product,'categories':category,'cate':d,'brands':b, 'subcates':subcates})
 
 def signup(request):
     category = Category.objects.all()
@@ -219,6 +217,7 @@ def productview(request,id):
     product = Product.objects.all().order_by('?')
     category = Category.objects.all() 
     cloth = Product.objects.get(pk=id)
+    print('cloth_date',cloth.date.day)
     i =0
     m = [] 
     for products in product:
@@ -270,13 +269,17 @@ def productview(request,id):
                 names = productss.name
                 prices = productss.price
                 categorys = productss.category
+                sub = productss.subcategory
                 image = productss.images
+                image1 = productss.images1
+                image2 = productss.images2
                 quantitys = productss.quantity
                 offers =  productss.offer   
                 des = productss.description 
-                bat = productss.battery 
+                one_day_offer = productss.one_day_offer 
                 bran = productss.brand
-                final = Product(id=mains,name=names,description=des,price=prices,category=categorys,images=image,quantity=quantitys,offer=offers,rating=l,review_count=r,battery=bat,brand=bran)  
+                date = product.date
+                final = Product(id=mains,name=names,description=des,price=prices,category=categorys,subcategory=sub, quantity=quantitys,offer=offers,rating=l,review_count=r,brand=bran,one_day_offer=one_day_offer,images=image,images1=image1,images2=image2,date=date)  
                 final.save()                          
                 print('bye',a)
                 feedback = Review.objects.all()                  
@@ -394,18 +397,27 @@ def user_cart(request):
     return render(request,'store/cart.html',{'usercarts':q,'products':products,'categories':category, 'subcates':subcates})
     
 def search(request):
+    search_product = []
     category = Category.objects.all()
     search = request.GET.get('search')
+    print('search',search)
     if search:
-        match = Product.objects.filter(Q(name__icontains=search)|Q(description__icontains=search))
-
-        # perform AND operation
-        # match = Product.objects.filter(name__icontains=search).filter(description__icontains=search)
-        if match:
-            return render(request,'store/search.html',{'products':match,'categories':category, 'subcates':subcates})    
-        else:
-            content = 'No Result Found'
-            return render(request,'store/search.html',{'content':content,'categories':category, 'subcates':subcates})
+        for i in search:
+            match = Product.objects.filter(Q(name__icontains=i)|Q(description__icontains=i))
+            if len(search_product) == 0:
+                print(len(search_product))
+                for l in match:
+                    search_product.append(l)
+                print(len(search_product))
+            # else:
+            #     for j in search_product:
+            #         for k in match:
+            #             if j == k:
+            #                 pass
+            #             else:
+            #                 search_product.append(k)
+            print(search_product)
+        return render(request,'store/search.html',{'products':search_product,'categories':category, 'subcates':subcates})
     else:
         content = 'Please Enter Something in Search Box'
         return render(request,'store/search.html',{'content':content,'categories':category, 'subcates':subcates})
@@ -449,7 +461,14 @@ def order(request,id):
                 prices  = product.price
                 quantitys = fm.cleaned_data['quantity']
                 print('hello',quantitys)
-                total = prices*quantitys
+                # total = prices*quantitys
+                if product.offer != 0:
+                    a = product.price * product.offer
+                    b = a/100
+                    offers_price = product.price - b
+                else:
+                    offers_price = product.price
+                total = offers_price * quantitys
                 addresss = fm.cleaned_data['address']
                 mobiles = fm.cleaned_data['mobile']
                 pincodes = fm.cleaned_data['pincode']
@@ -465,11 +484,15 @@ def order(request,id):
                         cloths_name = cloths.name
                         cloths_desc = cloths.description
                         cloths_img = cloths.images
+                        cloths_img1 = cloths.images1
+                        cloths_img2 = cloths.images2
                         cloths_category = cloths.category 
+                        cloths_subcategory = cloths.subcategory 
                         cloths_offer = cloths.offer 
-                        cloths_bat = cloths.battery  
+                        cloths_one_day_offer = cloths.one_day_offer  
                         cloths_brand = cloths.brand  
-                        cloths_rat = cloths.rating    
+                        cloths_rat = cloths.rating  
+                        cloths_date = cloths.date  
 
                         # error_message = None
                         # if not quantitys:
@@ -490,7 +513,7 @@ def order(request,id):
                         #     error_message = 'Mobile Number Should 6 Digits.'
                         
                         # if not error_message:
-                        product_info = Product(id=id,name=cloths_name,offer=cloths_offer,description=cloths_desc,images=cloths_img,price=cloths_price,quantity=cloths_quantity,category=cloths_category,battery=cloths_bat,brand=cloths_brand,rating=cloths_rat)  
+                        product_info = Product(id=id,name=cloths_name,offer=cloths_offer,description=cloths_desc,images=cloths_img,price=cloths_price,quantity=cloths_quantity,category=cloths_category, subcategory=cloths_subcategory ,one_day_offer=cloths_one_day_offer,brand=cloths_brand,rating=cloths_rat,images1=cloths_img1,images2=cloths_img2,date=cloths_date)  
                         product_info.save()                         
                         details.save()
                         available = Product.objects.all()
@@ -631,6 +654,7 @@ def subfilter(request,id):
     subcates = SubCategory.objects.all()
     category = Category.objects.all()
 
+
     for products in product:
         cate = products.category
         print('catteeeeeeeeee',cate)
@@ -767,3 +791,42 @@ class pdfdetail(PDFTemplateResponseMixin,DetailView):
     template_name = 'store/pdf.html'
     context_object_name = 'order'
     model = Userorder
+
+def addcategory(request):
+    category = Category.objects.all()
+    subcategory = SubCategory.objects.all()
+    if request.method == "POST":
+        fm = Productcategory(request.POST)
+        if fm.is_valid():
+            print('name',fm.cleaned_data['name'])
+            fm.save()
+            fm = Productcategory()
+    else:
+        fm = Productcategory()
+        print('fm')
+    return render(request,'store/addcategory.html',{'form':fm,'categories':category,'subcategories':subcategory})
+
+def addsubcategory(request):
+    if request.method == "POST":
+        fm = Productsubcategory(request.POST)
+        if fm.is_valid():
+            print('name',fm.cleaned_data['name'])
+            fm.save()
+            fm = Productsubcategory()
+    else:
+        fm = Productsubcategory()
+        print('fm')
+    return render(request,'store/addsubcategory.html',{'form':fm})
+
+def addproduct(request):
+    if request.method == "POST":
+        fm = Productform(request.POST,request.FILES)
+        if fm.is_valid():
+            print('name',fm.cleaned_data['name'])
+            fm.save()
+            fm = Productform()
+    else:
+        fm = Productform()
+        print('fm')
+    return render(request,'store/addproduct.html',{'form':fm})
+

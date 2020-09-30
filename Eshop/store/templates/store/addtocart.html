@@ -3,36 +3,38 @@
 {% block style %}
 
 <style>
-    .main {
-        width: 300px;
-    }
-
     .cont {
         display: flex;
         align-items: center;
         justify-content: center;
-        min-height: 85vh;
-        flex-wrap: wrap;
+        height: 90vh;
     }
-    .input_qu{
+
+    .input_qu {
         width: 230px;
-        border: 2px solid white;;
+        border: 2px solid white;
+        ;
         border-bottom: 2px solid black;
         background-color: white;
     }
-    .input_qu:focus{
+
+    .input_qu:focus {
         outline: none;
     }
-    .shop{
+    .shop {
         width: 200px;
         height: 200px;
-        display: flex;
     }
-    .but{
-        width: 150px;
-        margin-left: 35px;
+    .buy_btn{
+        background-color: white;
+        border: 1px solid black;
+        padding: 0 40px;
+        transition: 1s;
     }
-    
+    .buy_btn:hover{
+        background-color: black;
+        color: white;
+    }
 </style>
 
 {% endblock style %}
@@ -42,20 +44,21 @@
 {% block content %}
 <div class="cont">
     <div class="box">
-        <div class="m-4 p-4 main">
-            <div>
-                <img src="{{product.images.url}}" alt="" class="mx-auto shop">
-            </div><hr color="black">
-            <div  style="display: flex;">
-                <form action="" method="post" novalidate class="mx-auto">
-                    {% csrf_token %}
-                    <h4 class="mx-auto" style="width: 250px;">{{product.name}}</h4>
-                    <label for="quantity">Quantity:</label>
-                    <input type="text" name="quantity" class="input_qu" id=""> <br><br>
-                    <input class="px-4 py-1 my-1 vi_btn" style="margin-left: 70px;" type="submit" value="Submit">
-                    
-                </form>
-            </div>
+        <div class="text-center">
+            <img src="{{product.images.url}}" alt="" class="shop">
+        </div>
+        <hr color="black">
+        <div >
+            <form action="" class="mx-3" method="post">
+                {% csrf_token %}
+                <h4 class="py-2">{{product.name}}</h4>
+                <b><label for="quantity">Quantity:</label></b>
+                <input type="text" name="quantity" class="input_qu px-2"> <br><br>
+                <div class="text-center">
+                    <input class="px-4 py-1 my-1 buy_btn text-center" type="submit" value="Submit">
+                </div>
+
+            </form>
         </div>
     </div>
 </div>

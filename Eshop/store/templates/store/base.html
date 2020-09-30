@@ -14,8 +14,13 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
+    <script src="https://kit.fontawesome.com/9970e863a8.js" crossorigin="anonymous"></script>
+
+    <link rel="icon" href="{% static 'images/shopify-brands.svg' %}" type="image/icon type">
+
 
     <link rel="stylesheet" href="{% static 'css/nav.css' %}">
+    <script src="https://kit.fontawesome.com/9970e863a8.js" crossorigin="anonymous"></script>
 
     {% block styles %}
     {% endblock styles %}
@@ -27,87 +32,46 @@
     <!-- navbar -->
     {% block nav%}
 
-    <nav class="navbar-expand-lg navbar-light bg-light mt-4 sticky-top" id="up">
-        <div class="menu-bar">
-            <button style="float: right;" class="navbar-toggler" type="button" data-toggle="collapse"
-                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <div class="navbar_main sticky-top">
+        <div class="nav_brand"><i class="fab fa-shopify"></i></div>
+        <a href="#" class="toggle">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </a>
+        <div class="nav_items">
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="#">Category</a>
+                    <div class="sub-class-1">
+                        <ul>
+                            {% for category in categories %}
+                            <li><a href="{% url 'filter' category.id %}">{{category}}</a>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li>
-                        <a  href="{% url 'home' %}"><img src="home-solid.svg" alt="" srcset="" style="width: 10px; color: white;">Home
-                        </a>
-                    </li>
-                    <li><a href="#">Categories</a>
-                        <div class="sub-class-1">
-                            <ul>
-                                {% for category in categories %}
-                                <li class="hover-me"><a href="{% url 'filter' category.id %}">{{category}}</a>
+                                <div class="sub-class-2">
+                                    <ul>
+                                        {% for subcate in subcates %}
+                                            {% if subcate.subcategory|categorys:category %}
+                                            <a href="{% url 'subfilter' subcate.id %}"><li>{{subcate.name}}</li></a>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
 
-                                    <div class="sub-class-2">
-                                        <ul>
-                                            {% for subcate in subcates %}
-                                                {% if subcate.subcategory|categorys:category %}
-                                                <a href="{% url 'subfilter' subcate.id %}"><li>{{subcate.name}}</li></a>
-                                                {% endif %}
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
 
-                                </li>
-                                {% endfor %}
-                                <!-- 
-                                
-                                <li class="hover-me"><a href="#">Cloths</a>
-
-                                    <div class="sub-class-2">
-                                        <ul>
-                                            <li><a href="#">Electronics</a></li>
-                                            <li><a href="#">Grocery</a></li>
-                                            <li><a href="#">Electronics</a></li>
-                                            <li><a href="#">Grocery</a></li>
-                                        </ul>
-                                    </div>
-
-                                </li>
-                                <li class="hover-me"><a href="#">Electronics</a>
-
-                                    <div class="sub-class-2">
-                                        <ul>
-                                            <li><a href="#">Electronics</a></li>
-                                            <li><a href="#">Grocery</a></li>
-                                            <li><a href="#">Electronics</a></li>
-                                            <li><a href="#">Grocery</a></li>
-                                        </ul>
-                                    </div>
-
-                                </li>
-                                <li class="hover-me"><a href="#">Grocery</a>
-
-                                    <div class="sub-class-2">
-                                        <ul>
-                                            <li><a href="#">Electronics</a></li>
-                                            <li><a href="#">Grocery</a></li>
-                                            <li><a href="#">Electronics</a></li>
-                                            <li><a href="#">Grocery</a></li>
-                                        </ul>
-                                    </div>
-
-                                </li> -->
-                            </ul>
-                        </div>
-                    </li>
-                    {% if user.is_authenticated %}
+                </li>
+                {% if user.is_authenticated %}
 
                     <li><a href="#"><b>Hello, {{user.first_name}}</b></a>
-                        <div class="sub-class-1" style="width: 180px;">
+                        <div class="sub-class-1">
                             <ul>
-                                <li class="hover-me"><a href="{% url 'profile' %}">My Profile</a></li>
-                                <li class="hover-me"><a href="{% url 'delete' user.id %}">Delete Account</a></li>
-                                <li class="hover-me"><a href="{% url 'logout' %}">Logout</a></li>
+                                <li><a href="{% url 'profile' %}">My Profile</a></li>
+                                <li class="px-1"><a href="{% url 'delete' user.id %}">Delete Account</a></li>
+                                <li><a href="{% url 'logout' %}">Logout</a></li>
                             </ul>
                         </div>
                     </li>
@@ -117,82 +81,17 @@
                     <li><a href="{% url 'login' %}">Login</a></li>
                     {% endif %}
                     <li><a href="{% url 'usercart' %}">Cart</a></li>
-                </ul>
-                <div style="display: flex; right: 0%;" class="mx-3">
-                    <form class="form-inline my-2 my-lg-0" action="/search/" method="get">
-                        {% csrf_token %}
-                        <input type="text" class="bor_bo pl-2" placeholder="Search" name="search">
-                        <button class="px-4  vi_btn my-1" style="margin-left: 15px;" type="submit">Search</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-
-    <!-- <nav class="navbar navbar-expand-lg navbar-light bg mt-4 sticky-top" id="up">
-        <p style="color: white;" class="pr-5 ml-4 my-0">Online Store</p>
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon">
-                <i class="fas fa-bars"></i>
-            </span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="fon_co" href="{% url 'home' %}">Home</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="dropdown-toggle fon_co" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">Categories </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        {% for category in categories %}
-                        <a href="{% url 'filter' category.id %}" class="dropdown-item dr_bg">{{category}}</a>
-                        {% endfor %}
-                    </div> 
-
-                </li>
-
-                {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <p class="fon_co m-0 pl-4"><b>Hello,{{user.first_name}}</b></p>
-                </li>
-                <li class="nav-item">
-                    <a class="fon_co" href="{% url 'profile' %}">Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="fon_co" href="{% url 'orders' %}">Order</a>
-                </li>
-                <li class="nav-item">
-                    <a class="fon_co" href="{% url 'logout' %}">Logout</a>
-                </li>
-                
-
-                {% else %}
-                <li class="nav-item">
-                    <a class="fon_co" href="{% url 'signup' %}">SignUp</a>
-                </li>
-                <li class="nav-item">
-                    <a class="fon_co" href="{% url 'login' %}">Login</a>
-                </li>
-                
-
-                {% endif %}
-                <li class="nav-item ">
-                    <a class="fon_co" href="{% url 'usercart' %}">Cart</a>
-                </li>
+                    {% if user.is_superuser %}
+                    <li><a href="{% url 'addcategory' %}">Add Product</a></li>
+                    {% endif %}
             </ul>
-            <form class="form-inline my-2 my-lg-0" action="/search/" method="get">
-                {% csrf_token %}
-                <input type="text" class="bor_bo pl-2" placeholder="Search" name="search">
-                <button class="px-4 vi_btn" style="margin-left: 100px;" type="submit">Search</button>
-
+            <form action="" class="form" autocomplete="off">
+                <input type="text" name="" id="" placeholder="Search">
+                <input type="submit" value="Search">
             </form>
         </div>
-    </nav> -->
+    </div>
+
     {% endblock nav%}
 
     <!-- body -->
@@ -210,6 +109,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
+
+    <script src="{% static 'javascript/nav.js' %}"></script>
     {% endblock style %}
 
     {% block script %}{% endblock script %}

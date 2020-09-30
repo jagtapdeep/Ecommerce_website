@@ -1,0 +1,91 @@
+*{
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+}
+.main_div{
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.box{
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 50px;
+    border-radius: 10px;
+    margin: 0 10%;
+    position: relative;
+    /* box-shadow: 0px 0px 10px black; */
+}
+.box .inputbox{
+    position: relative;
+}
+.box .inputbox input{
+    /* width: 100%; */
+    padding: 10px;
+    font-size: 16px;
+    color: white;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid white;
+    margin-bottom: 30px;
+    outline: none;
+}
+.box .inputbox label{
+    position: absolute;
+    top: 0;
+    left: 10px;
+    color: white;
+    padding: 10px 0;
+    transition: 1s;
+}
+.box input[ type="submit" ]{
+    border: 1px solid white;
+    background-color: transparent;
+    color: white;
+    width: 60%;
+    padding: 3px 35px;
+    outline: none;
+    margin-top: 15px;
+    transition: 1s ease;
+}
+.box input[ type="submit" ]:hover{
+    color: black;
+    background-color: white;
+}
+.box .inputbox input:focus ~ label , .box .inputbox input:valid ~ label{
+    top: -25px;
+    left: 0px;
+    font-size: 13px;
+    color: chartreuse;
+}
+.main_div .box a{
+    position: absolute;
+    bottom: 95px;
+    right: 50px;
+}
+.main_div .box .profile_img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+@media (max-width: 350px){
+    .box{
+        padding: 50px 30px;
+    }
+    .box .inputbox input{
+        width: 95%;
+    }   
+    .box input[ type="submit" ]{
+        padding: 3px 10px;
+    }
+    .main_div .box a{
+        right: 35px;
+    }
+}

@@ -1,0 +1,186 @@
+*{
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+    font-family: 'Cormorant', serif;
+}
+.navbar_main{
+    display: flex;
+    justify-content: space-between;
+    background-color: black;
+    color: white;
+    position: sticky;
+}
+.nav_brand{
+    font-size: 2rem;
+    margin-left: 6rem;
+    cursor: pointer;
+}
+.navbar_main .nav_items{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.navbar_main .nav_items ul{
+    display: flex;
+    align-items: center;
+}
+.navbar_main .nav_items li{
+    list-style: none;
+    padding: 10px 10px 0px;
+    position: relative;
+}
+.navbar_main .nav_items a{
+    text-decoration: none;
+    color: white;
+    padding: 0 1rem;
+    font-size: 18px;
+    position: relative;
+}
+.navbar_main .nav_items .sub-class-1{
+    border: 1px solid rgb(200, 200, 200);
+    border-radius: 5px;
+    padding: 10px 0px;
+    text-align: center;
+    display: none;
+}
+.navbar_main .nav_items .sub-class-1 ul{
+    display: flex;
+    flex-direction: column;
+}
+.navbar_main .nav_items ul li:hover .sub-class-1{
+    display: block;
+    position: absolute;
+    background: white;
+    top: 38px;
+    left: 0;
+    z-index: 99;
+}
+.navbar_main .nav_items ul li:hover .sub-class-1 ul li, .sub-class-2 ul li{
+    padding: 7px 5px;
+}
+.navbar_main .nav_items ul li:hover .sub-class-1 ul li a{
+    color: black;
+}
+.navbar_main .nav_items ul li:hover .sub-class-1 ul li:hover{
+    background-color: rgb(199, 199, 199);
+    width: 100%;
+}
+.sub-class-2 ul a:hover{
+    background-color: rgb(199, 199, 199);
+    width: 100%
+}
+.navbar_main .nav_items .sub-class-2{
+    display: none;
+    position: absolute;
+}
+.sub-class-1 ul li:hover .sub-class-2{
+    display: block;
+    position: absolute;
+    left: 125px;
+    border: 1px solid rgb(200, 200, 200);
+    border-radius: 5px;
+    padding: 10px 0;
+    top: 5px;
+    background-color: white;
+}
+.navbar_main>.nav_items>ul>li>a::after{
+    content: "";
+    position: absolute;
+    background-color: white;
+    width: 0px;
+    height: 2px;
+    bottom: -8px;
+    left: 50%;
+    transition: 1s ease;
+}
+.navbar_main .nav_items a:hover::after{
+    width: 80%;
+    left: 10%;
+}
+.navbar_main .nav_items .form{
+    margin-right: 50px;
+}
+.navbar_main .nav_items .form input[ type = 'text']{
+    border: none;
+    border-bottom: 2px solid white;
+    background-color: black;
+    padding: 3px 10px;
+    color: white;
+    outline: none;
+}
+.navbar_main .nav_items .form input[ type = 'submit']{
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+    padding: 5px 25px;
+    margin: 7px 20px;
+    transition: 1s ease;
+    font-weight: bold;
+    cursor: pointer;
+}
+.navbar_main .nav_items .form input[ type = 'submit']:hover{
+    background-color: white;
+    color: black;
+}
+.navbar_main .nav_items .form input[ type = 'submit']:focus{
+    outline: none;
+}
+.navbar_main .toggle{
+    position: absolute;
+    right: 3rem;
+    top: 10px;
+    display: none;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 40px;
+    height: 20px;
+}
+.navbar_main .toggle .bar{
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    border-radius: 10px;
+}
+@media (max-width:1224px){
+    .navbar_main .toggle{
+        display: flex;
+    }
+    .navbar_main .nav_items{
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        margin-top: 20px;
+        align-items: flex-start;
+    }
+    .nav_brand{
+        margin-left: 3rem;
+    }
+    .navbar_main{
+        display: flex;
+        flex-direction: column;
+    }
+    .navbar_main .nav_items ul{ 
+        flex-direction: column;
+    }
+    .navbar_main .nav_items .form{
+        margin: 20px 10px;
+    }
+    .navbar_main .nav_items .form input{
+        margin: 10px;
+    }
+    .nav_items.active{
+        display: flex;
+    }
+    .navbar_main .nav_items ul li:hover .sub-class-1{
+        left: 100px;
+        top: 0px;
+    }
+    .sub-class-1 ul li:hover .sub-class-2{
+        left: 100px;
+    }
+    .navbar_main .nav_items ul li:hover .sub-class-1 ul li{
+        padding: 7px 0px;
+    }
+}

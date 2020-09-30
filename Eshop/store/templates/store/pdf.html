@@ -47,10 +47,10 @@
         <h1 style="font-size: 18px; margin-top: 40px;">Order Summary :-</h1>
         <h1>Customer Name :-  {{order.customer.first_name}} {{order.customer.last_name}}.</h1>
         <h1>Product Name :- {{order.product.name}}.</h1>
-        <h1>Product Price :- Rs. {{order.price|offer_price:order.offer}}</h1>
+        <h1>Product Price :- Rs. {{order.price|product_price:order.quantity}}</h1>
         <h1>Product Offer :- {{order.offer}}%</h1>
         <h1>Quantity :- {{order.quantity}}</h1>
-        <h1 style="font-size: 18px; color: red;">Total Price :- Rs. {{order.price|offer_total_price:order.quantity}}
+        <h1 style="font-size: 18px; color: red;">Total Price :- Rs. {{order.price}}
         </h1>
     </div>
 
@@ -60,7 +60,7 @@
         <h1 style="font-size: 18px; margin-top: 40px;">Product Details :-</h1>
         <h1>Product Name :- {{order.product.name}}</h1>
         <h1>Product Description :- {{order.product.description}}</h1>
-        <h1>Product Price :- Rs. {{order.price}}</h1>
+        <h1>Product Price :- Rs. {{order.price|product_price:order.quantity}}</h1>
         <h1>Product offer :- {{order.product.offer}}%</h1>
         <h1>Product Rating :- {{order.product.rating}}</h1>
 

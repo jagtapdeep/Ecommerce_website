@@ -4,7 +4,8 @@
 {% load filter %}
 
 {% block styles %}
-<link rel="stylesheet" href="{% static 'css/filter.css' %}">
+<!-- <link rel="stylesheet" href="{% static 'css/filter.css' %}"> -->
+<link rel="stylesheet" href="{% static 'css/filter1.css' %}">
 {% endblock styles %}
 
 
@@ -20,6 +21,7 @@
         {% endif %}
     </p>
     <hr color="black">
+    
     <div class="row">
         <div class="col-sm-3 col-md-3 col-lg-3 mt-2">
             <div>
@@ -104,7 +106,7 @@
                             <hr color="black" class="mr-1">
                             <div class="offer_content" style="display: none;" >
                                 <label for="offer">Offer :-</label>
-                                <input type="number" class=" in_con px-3" max="99" min="1" name="offer" id="offer">
+                                <input type="number" class=" in_con" max="99" min="1" name="offer" id="offer">
                             </div>
                         </div>
                         <input class="my-4 py-1 px-5 vi_btn" type="submit" value="Apply">
@@ -113,10 +115,10 @@
             </div>
         </div>
         <div class="col-md-9 col-sm-9 col-lg-9">
-            <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 my-5">
+            <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 ">
                 {% if products %}
                 {% for product in products %}
-                <div class="col mb-5">
+                <div class="col my-5">
                     <div style="width: 18rem;" class="mx-auto">
                         <img src="{{product.images.url}}" style="width: 250x; height: 250px; border: 1px solid black;"
                             class="mx-auto p-3 card-img-top" alt="...">
@@ -127,7 +129,7 @@
                             <p class="card-text">{{product.description}}</p>
                             <div>
                                 <a href="{% url 'addtocart' product.id %}" type="button"
-                                    class="my-4 pt-1 px-3 vi_btn">Add
+                                    class="my-4 pt-1 mt-5 px-3 vi_btn">Add
                                     To Cart</a>
                                 <a href="{% url 'productview' product.id %}" type="button"
                                     class="my-4 pt-1 px-3 vi_btn">View Product</a>
@@ -155,11 +157,11 @@
 
         </div>
     </div>
-    <div style="position: absolute; left: 95%; bottom: 5%; position: fixed;">
-        <a href="#up"><img src="{% static 'images/arrow-up.svg' %}" alt="" srcset=""></a>
-    </div>
 </div>
 
+<div class="up" onclick="topfunction()">
+    <button><i class="fa fa-arrow-up"></i></button>
+</div>
 
 {% endblock content %}
 
@@ -169,5 +171,23 @@
 
 
 <script src="{% static 'javascript/filter.js' %}"></script>
+
+<script>
+    var myUp = document.querySelector(".up");
+
+    addEventListener("scroll", () => {
+        if (window.pageYOffset > 100) {
+            myUp.classList.add("up_scroll")
+        } else {
+            myUp.classList.remove("up_scroll")
+        }
+    })
+
+
+    function topfunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+</script>
 
 {% endblock script %}

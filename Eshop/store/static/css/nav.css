@@ -1,135 +1,199 @@
 *{
-    padding: 0;
-    margin: 0;
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
     font-family: 'Cormorant', serif;
 }
-dl, ol, ul {
-    margin-top: 0;
-    margin-bottom: 0rem;
-}
-.menu-bar{
+.navbar_main{
+    display: flex;
+    justify-content: space-between;
     background-color: black;
-    text-align: left;
+    color: white;
+}
+.nav_brand{
+    font-size: 2rem;
+    margin-left: 6rem;
+    cursor: pointer;
+}
+.navbar_main .nav_items{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.navbar_main .nav_items ul{
+    display: flex;
+    align-items: center;
+}
+.navbar_main .nav_items li{
+    list-style: none;
+    padding: 15px 10px 0px;
+    position: relative;
+}
+.navbar_main .nav_items a{
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    position: relative;
+}
+.navbar_main .nav_items .sub-class-1{
+    border: 1px solid rgb(200, 200, 200);
+    border-radius: 5px;
+    padding: 10px 0px;
+    text-align: center;
+    display: none;
+}
+.navbar_main .nav_items .sub-class-1 ul{
+    display: flex;
+    flex-direction: column;
+}
+.navbar_main .nav_items ul li:hover .sub-class-1{
+    display: block;
+    position: absolute;
+    background: white;
+    top: 38px;
+    left: -10px;
+}
+.navbar_main .nav_items ul li:hover .sub-class-1 ul li,.sub-class-2 ul li{
+    padding: 3px 20px;
+}
+.navbar_main .nav_items ul li:hover .sub-class-1 ul li a{
+    color: black;
+}
+.navbar_main .nav_items ul li:hover .sub-class-1 ul li:hover{
+    background-color: rgb(199, 199, 199);
     width: 100%;
 }
-.menu-bar ul{
-    display: inline-flex;
-    list-style: none;
-    color: white;
+.sub-class-2 ul a:hover{
+    background-color: rgb(199, 199, 199);
+    width: 100%;
 }
-.menu-bar ul li {
-    margin: 0px 20px;
-    padding: 5px;
-    /* color black is not apply */
-    color: black;
-}
-.menu-bar ul li a{
-    text-decoration: none;
-    color: white;
-}
-.menu-bar ul li:hover{
-    color: white;
-}
-/* .menu-bar ul li:hover a{
-    color:black;
-} */
-.sub-class-1{
+.navbar_main .nav_items .sub-class-2{
     display: none;
-    border: 1px solid rgb(223, 220, 220);
-    border-radius: 5px;
+    position: absolute;
 }
-.menu-bar ul li:hover .sub-class-1{
+.sub-class-1 ul li:hover .sub-class-2{
     display: block;
     position: absolute;
-    background-color: white;
-    margin-left: 0;
-    margin-top: 5px;
-}
-.menu-bar ul li:hover .sub-class-1 ul{
-    display: block;
-    text-align: left;
-    padding: 10px 0px;
-}
-.menu-bar ul li:hover .sub-class-1 ul li{
-    /* width: 100px; */
-    margin: 0px;
-    padding: 5px 50px;
-    padding-left: 15%;
-}
-.menu-bar ul li:hover .sub-class-1 ul li a{
-    color: black;
-}
-.menu-bar ul li:hover .sub-class-1 ul li:hover{
-    background-color: grey;
-}
-.menu-bar ul li:hover .sub-class-1 ul li:hover a{
-    color: white;
-}
-.sub-class-2{
-    color: black;
-    display: none;
-    border: 1px solid rgb(223, 220, 220);
+    left: 120px;
+    border: 1px solid rgb(200, 200, 200);
     border-radius: 5px;
-}
-.hover-me:hover .sub-class-2{
-    display: block;
-    position: absolute;
-    margin-left: 105px;
-    margin-top: -20px;
+    padding: 10px 0;
+    top: 5px;
     background-color: white;
 }
-.menu-bar ul li:hover .sub-class-1 ul .hover-me:hover .sub-class-2 ul li a{
-    color: black;
+.navbar_main>.nav_items>ul>li>a::after{
+    content: "";
+    position: absolute;
+    background-color: white;
+    width: 0px;
+    height: 2px;
+    bottom: -8px;
+    left: 50%;
+    transition: 1s ease;
 }
-.menu-bar ul li:hover .sub-class-1 ul .hover-me:hover .sub-class-2 ul li:hover a{
-    color: white;
+.navbar_main .nav_items a:hover::after{
+    width: 100%;
+    left: 0;
 }
-.fon_co {
-    margin-left: 20px;    
-    color: white;
+.navbar_main .nav_items .form{
+    margin-right: 50px;
 }
-.fon_co:hover{
-    color: rgb(202, 199, 199);
-}
-.bg{
-    background: black;
-}
-.bor_bo{
-    background: black;
-    /* background-image: url(search.svg);
-    background-repeat: no-repeat;
-    padding-left: 20px; */
+.navbar_main .nav_items .form input[ type = 'text']{
     border: none;
     border-bottom: 2px solid white;
+    background-color: black;
+    padding: 3px 10px;
     color: white;
-}
-.bor_bo:focus{
     outline: none;
 }
-.but_bg{
-    background: white;
-    color: black;
-    border:2px solid white;
-    border-radius: 3px;
-    font-weight: 500;
-}
-.dr_bg:hover{
-    background-color: silver;
-}
-.vi_btn{
-    border: 1px solid black; 
-    color:black;  
-    background: white;          
-}
-.vi_btn:hover{
-    border: 1px solid white;
-    color: white;
+.navbar_main .nav_items .form input[ type = 'submit']{
     background-color: black;
-    text-decoration: none;
+    color: white;
+    border: 1px solid white;
+    padding: 5px 25px;
+    margin: 7px 20px;
+    transition: 1s ease;
+    font-weight: bold;
+    cursor: pointer;
 }
-.dropdown:hover .dropdown-menu{
-    display: block;
+.navbar_main .nav_items .form input[ type = 'submit']:hover{
+    background-color: white;
+    color: black;
 }
-element.style{
-    margin-left: 30px;
+.navbar_main .nav_items .form input[ type = 'submit']:focus{
+    outline: none;
+}
+.navbar_main .toggle{
+    position: absolute;
+    right: 3rem;
+    top: 10px;
+    display: none;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 40px;
+    height: 20px;
+}
+.navbar_main .toggle .bar{
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    border-radius: 10px;
+}
+::-webkit-scrollbar{
+    width: 10px;
+}
+::-webkit-scrollbar-thumb{
+    background-color: black;
+    border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover{
+    box-shadow: 10px 10px 100px black;
+}
+::-webkit-scrollbar-track{
+    background-color: white;
+    border-radius: 5px;
+}
+@media (max-width:1224px){
+    .navbar_main .toggle{
+        display: flex;
+    }
+    .navbar_main .nav_items{
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        margin-top: 20px;
+    }
+    .nav_brand{
+        margin-left: 3rem;
+    }
+    .navbar_main{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    .navbar_main .nav_items ul{ 
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .navbar_main .nav_items .form{
+        margin: 20px 10px;
+    }
+    .navbar_main .nav_items .form input{
+        margin: 10px;
+    }
+    .nav_items.active{
+        display: flex;
+        align-items: flex-start;
+    }
+    .navbar_main .nav_items ul li:hover .sub-class-1{
+        left: 100px;
+        top: 0px;
+    }
+    .sub-class-1 ul li:hover .sub-class-2{
+        left: 112px;
+    }
+    .navbar_main .nav_items ul li:hover .sub-class-1 ul li{
+        padding: 7px 0px;
+    }
 }

@@ -1,0 +1,30 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/addproduct.css' %}">
+{% endblock styles %}
+
+
+{% block title%}Admin{% endblock title%}
+
+{% block content %}
+<h1 class="my-4">Welcome to Admin Page .</h1>
+
+<p class="ml-4 my-4" style="color: chartreuse; font-size: 20px;">After successfully creating category, now fill form to
+    create subcategory and select appropriate category .</p>
+
+
+<a href="{% url 'addproduct' %}" class="product ml-3 inline-block">Add Product</a> <br><br>
+<a href="{% url 'addcategory' %}" class="product ml-3 inline-block">Add Category</a>
+
+<div class="mt-5 ml-3">
+    <h2 class="my-3">Subcategory Form</h2>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="Submit">
+    </form>
+</div>
+
+
+{% endblock content %}

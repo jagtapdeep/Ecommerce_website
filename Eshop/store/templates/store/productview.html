@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block styles %}
-<link rel="stylesheet" href="{% static 'css/productview.css' %}">
+<link rel="stylesheet" href="{% static 'css/product.css' %}">
 {% endblock styles %}
 
 {% block title %}Product View{% endblock title %}
@@ -13,140 +13,173 @@
     <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2">
         <div class="col">
             <div class="mx-auto">
-                <img src="{{products.images.url}}" data-zoom-image="{{products.images.url}}" id="zoom" class="my-0 px-4 img_pro" alt="" srcset="">
+                <img src="{{products.images.url}}" id="big_img" style="height: 350px;" data-zoom-image="{{products.images.url}}" id="zoom"
+                class="my-0 px-4 img_pro" alt="" srcset="">
+                <ul class="small_img" style="display: flex; justify-content: space-evenly; flex-wrap: wrap;">
+                    {% if products.images1 or products.images2 %}
+                    <li class="p-2 m-2" style="border:1px solid black; list-style: none; width: 100px; height: 100px;"><img style="width: 100%; height: 100%;" onmousemove="img_change(this)" src="{{products.images.url}}" class="img_inner" alt="" srcset=""></li>
+                    {% endif %} 
+                    {% if products.images1 %}
+                    <li class="p-2 m-2" style="border:1px solid black; list-style: none; width: 100px; height: 100px;"><img style="width: 100%; height: 100%;" onmousemove="img_change(this)" src="{{products.images1.url}}" class="img_inner" alt="" srcset=""></li> 
+                    {% endif %}
+                    {% if products.images2 %}
+                    <li class="p-2 m-2" style="border:1px solid black; list-style: none; width: 100px; height: 100px;"><img style="width: 100%; height: 100%;" onmousemove="img_change(this)" src="{{products.images2.url}}" class="img_inner" alt="" srcset=""></li>
+                    {% endif %}
+                </ul>
             </div>
         </div>
-        <div class="col">
-            <div class="mx-5 mt-4 p-0" style="font-size: 18px;">
-                <h4>{{products.name}}</h4>
-                <p>by {{products.brand}}</p>
-                <span>{{products.review_count}} Reviews and Rating</span>
-                <p> Product code ISRC2020</p>
-                <!-- <hr class="mx-0" width="320px"> -->
-                {% if products.offer|offer %}
-                <p>price:- <b style="font-family: serif; color: tomato;"> ₹ {{products.price}}</b>
-                {% else %}
-                <div  class="mt-2" >
-                    <p>price:- <b style="font-family: serif; color: tomato;"> ₹ {{products.price|offer_price:products.offer}}</b>
-                        <del class="del_pri">  ₹ {{products.price}}</del>
-                        <span class="ml-2" style="color: chartreuse;">upto {{products.offer}}% off</span>
-                    </p>
-                </div>
-                {% endif %}
-                </p>
-                <p>{{products.description}}</p>
-                <h6>Free Home Delivary.</h6>
-                {% if products.quantity|available %}
-                    {% if products.quantity|availables %}
-                        <p><b>Availability :-</b><span style="color: rgb(7, 255, 102);"> Harry Up ,Only  {{products.quantity}}    available.</span></p>
-                    {% else %}
-                        <p><b>Availability :-</b><span style="color: rgb(7, 255, 102);"> In stock .</span></p>
+        <div class="col text-center">
+            <div class="inner_info">
+                <div class="mx-4 mt-4 p-0" style="font-size: 18px;">
+                    <h4>{{products.name}}</h4>
+                    <p>by {{products.brand}}</p>
+                    <span>{{products.review_count}} Reviews and Rating</span>
+                    <p> Product code ISRC2020</p>
+                    <!-- <hr class="mx-0" width="320px"> -->
+                    {% if products.offer|offer %}
+                    <p>price:- <b style="font-family: serif; color: tomato;"> ₹ {{products.price}}</b>
+                        {% else %}
+                    <div class="mt-2">
+                        <p>price:- <b style="font-family: serif; color: tomato;"> ₹
+                                {{products.price|offer_price:products.offer}}</b>
+                            <del class="del_pri"> ₹ {{products.price}}</del>
+                            <span class="ml-2" style="color: chartreuse;">upto {{products.offer}}% off</span>
+                        </p>
+                    </div>
                     {% endif %}
-                {% else %}
-                <p><b>Availability :-</b> <span style="color: red;"> Out of stock. </span> </p>                        
-                {% endif %}
-                <!-- <p>Availability :- In stock .</p> -->
-                <a href="{% url 'addtocart' products.id %}" type="button" class="px-3 py-1 vi_btn mr-3">Add to cart</a>
+                    </p>
+                    <p>{{products.description}}</p>
+                    <h6>Free Home Delivary.</h6>
+                    {% if products.quantity|available %}
+                    {% if products.quantity|availables %}
+                    <p><b>Availability :-</b><span style="color: rgb(7, 255, 102);"> Harry Up ,Only
+                            {{products.quantity}}
+                            available.</span></p>
+                    {% else %}
+                    <p><b>Availability :-</b><span style="color: rgb(7, 255, 102);"> In stock .</span></p>
+                    {% endif %}
+                    {% else %}
+                    <p><b>Availability :-</b> <span style="color: red;"> Out of stock. </span> </p>
+                    {% endif %}
+                    <!-- <p>Availability :- In stock .</p> -->
+                    <a href="{% url 'addtocart' products.id %}" type="button" class="px-3 py-1 vi_btn mr-3">Add to
+                        cart</a>
 
-                {% if products.quantity|available %}            
-                <a href="{% url 'order' products.id %}" type="button" class="px-3 py-1 vi_btn mr-3">Buy</a>
-                {% endif %}
+                    {% if products.quantity|available %}
+                    <a href="{% url 'order' products.id %}" type="button" class="px-3 py-1 vi_btn mr-3">Buy</a>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
 </div>
 <hr class="mt-4 mx-5" color="black">
 {% if customer_names %}
-    <div class="container">
-        <div class="for">
-            <h1>Review</h1>
-            <form action="" method="POST">
-                {% csrf_token %}
-                {% for fm in form %}
-                    {{fm}} 
-                {% endfor %}
-                <!-- <input type="email" class="in_con my-3 pl-2" placeholder="Enter Your Email">
-
-                <input type="password" class="in_con my-3 pl-2" placeholder="Enter Password"> -->
-                <br>
-                <input type="submit" value="Submit" class="py-1 px-4 my-4 vi_btn">
-            </form>
-        </div>
+<div class="container">
+    <div class="for">
+        <h1>Review</h1>
+        <form action="" method="POST">
+            {% csrf_token %}
+            {% for fm in form %}
+            {{fm}} <br>
+            {% endfor %}
+            <input type="submit" value="Submit" class="py-1 px-4 my-4 vi_btn">
+        </form>
     </div>
-    <hr color="black" class="mt-0 mx-5">
-    <!-- {% for feedback in feedbacks %}
+</div>
+<hr color="black" class="mt-0 mb-5 mx-5">
+<!-- {% for feedback in feedbacks %}
         {% if feedback.product_id|review:products.id %}
             <hr color="black" class="mt-0 mx-5">
             
         {% endif %} 
     {% endfor %} -->
-    <div class="container">
-        <div class="pl-2">
-            {% if feedbacks %} 
-                <!-- <h1>Customer Review</h1>
+
+<div class="container">
+    <div class="pl-2">
+        {% if feedbacks %}
+        <!-- <h1>Customer Review</h1>
                 <hr color="black" class="mt-0 mr-2"> -->
-                {% for feedback in feedbacks %}
-                    {% if feedback.product_id|review:products.id %}
-                    <h1>Customer Review</h1>
-                    <hr color="black" class="mt-0 mr-2">
-                        <h5 class="py-2">Customer Name :- {{feedback.user_name}}</h5>
-                        <h6 class="py-2">Product Rating :- {{feedback.rating}}</h6>
-                        <p class="py-2">Customer Review :- {{feedback.comments}}</p>
-                        <hr color="black" class="mt-0 mr-2">
-                    {% endif %} 
-                {% endfor %} 
-            {% endif %}
+        {% for feedback in feedbacks %}
+        {% if feedback.product_id|review:products.id %}
+        <h1>Customer Review</h1>
+        <hr color="black" class="mt-0 mr-2">
+        <h5 class="py-2">Customer Name :- {{feedback.user_name}}</h5>
+        <h6 class="py-2">Product Rating :- {{feedback.rating}}</h6>
+        <p class="py-2">Customer Review :- {{feedback.comments}}</p>
+        <hr color="black" class="mt-0 mr-2">
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+<!-- <hr color="black" class="mt-5 mx-5"> -->
+{% if ms|length %}
+<div class="container-fluid main mt-5">
+    <h1 class="ml-3 mb-3">Related Product</h1>
+    <hr class="mx-3 p-0 my-0" color="black">
+    <div class="container mx-auto">
+        <div class="row row-cols-2 row-cols-sm-2 row-cols-md-4 mx-auto">
+            {% for m in ms %}
+            <div class="col cards pb-0 pt-3 my-3">
+                <div class="cards-inner">
+                    <a href="{% url 'productview' m.id %}">
+                        <img src="{{m.images.url}}" style="border: 1px solid black; width: 100%; height: 200px;"
+                            class="pro_size p-2" alt="" srcset="">
+                    </a>
+                    <div class="mt-1" style="text-align: center;">
+                        <p><b>{{m.name}}</b></p>
+                        {% if m.offer|offer %}
+                        <p style="color: red;">No Offer</p>
+                        {% else %}
+                        <p style="color: chartreuse;">upto {{m.offer}}% off</p>
+                        {% endif %}
+                        <p>{{m.brand}}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         </div>
     </div>
-    {% endif %}
-    <!-- <hr color="black" class="mt-5 mx-5"> -->
-    {% if ms|length %}
-        <div class="container-fluid main mt-5">
-        
-            <div class="container-fluid">
-                <div class="row row-cols-1 row-cols-md-2">
-                    
-                    <div class="col">
-                        <h2 class="pt-3" style="display: inline-block;">Related Product</h2>
-                    </div>
-                </div>
-            </div>
-            <hr class="mx-3 p-0 my-0">
-            <div class="container mx-auto">
-                <div class="row row-cols-2 row-cols-sm-2 row-cols-md-4 mx-auto">
-                    {% for m in ms %}
-                    <div class="col pb-0 pt-5">
-                        <a href="{% url 'productview' m.id %}">
-                            <img src="{{m.images.url}}" style="border: 1px solid black; width: 100%; height: 200px;" class="pro_size p-2" alt=""srcset="">
-                        </a>
-                        <!-- <img src="{{m.images.url}}" style="border: 1px solid black; height: 200px;" class="pro_size p-2" alt=""
-                            srcset=""> -->
-                        <div class="mt-1" style="text-align: center;">
-                            <p><b>{{m.name}}</b></p>
-                            {% if m.offer|offer %}
-                            <p style="color: red;">No Offer</p>
-                            {% else %}
-                            <p style="color: chartreuse;">upto {{m.offer}}% off</p>
-                            {% endif %}
-                            <p>{{m.brand}}</p>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-            <div style="position: absolute; left: 95%; bottom: 5%; position: fixed;">
-                <a href="#up"><img src="{% static 'images/arrow-up.svg' %}" alt="" srcset=""></a>
-            </div>
-        </div>
-    {% endif %}
+</div>
+{% endif %}
+<!-- <div style="position: absolute; left: 95%; bottom: 5%; position: fixed;">
+        <a href="#up"><img src="{% static 'images/arrow-up.svg' %}" alt="" srcset=""></a>
+    </div> -->
+<div class="up" onclick="topfunction()">
+    <button><i class="fa fa-arrow-up"></i></button>
+</div>
 {% endblock content %}
 
 {% block script %}
 
-    <script src="{% static 'javascript/js/jquery.elevateZoom-3.0.8.min.js' %}"></script>
+<script src="{% static 'javascript/js/jquery.elevateZoom-3.0.8.min.js' %}"></script>
 
-	<script>
+<!-- <script>
 		$("#zoom").elevateZoom();
-	</script>
+	</script> -->
+
+<script>
+    var myUp = document.querySelector(".up");
+    const big_img = document.getElementById("big_img");
+
+    addEventListener("scroll", () => {
+        if (window.pageYOffset > 100) {
+            myUp.classList.add("up_scroll")
+        } else {
+            myUp.classList.remove("up_scroll")
+        }
+    })
+
+    function topfunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+
+    function img_change(id){
+        big_img.src = id.src;
+    }
+</script>
 
 {% endblock script %}

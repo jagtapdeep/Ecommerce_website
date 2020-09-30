@@ -2,7 +2,48 @@
 {% load static %}
 
 {% block style %}
-<link rel="stylesheet" href="{% static 'css/signup.css' %}">
+<!-- <link rel="stylesheet" href="{% static 'css/signup1.css' %}"> -->
+
+<style>
+    *{
+        margin:0px;
+        padding:0px;
+        font-family: 'Cormorant', serif;
+    }  
+    .flex-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 90vh;
+    }
+    .in_con{
+        border: none;
+        border-bottom: 2px solid black;
+    }
+    .in_con:focus{
+        outline: none;
+    }
+    .in_err{
+        border: 2px solid white;
+        border-bottom: 2px solid red;
+        width: 250px;
+        margin-left: 35px;
+    }
+    .in_err:focus{
+        outline: none;
+    }
+    .buy_btn{
+        background-color: white;
+        border: 1px solid black;
+        padding: 0 40px;
+        transition: 1s;
+    }
+    .buy_btn:hover{
+        background-color: black;
+        color: white;
+    }
+</style>
+
 {% endblock style %}
 
 {% block title%}Order Form{% endblock title%}
@@ -23,14 +64,14 @@
         </div>
     {% endif %}
     <div class="flex-container">
-            <div class="py-5">
-                <form action="" method="post" novalidate>
+            <div class="order_inner">
+                <form class="text-center" action="" method="post">
                     {% csrf_token %}
-                    <h3 class="head_log">ORDER</h3>
+                    <h3 class="py-4 text-center">ORDER</h3>
                     {% for fm in form %}
-                    <p class="mx-3 p-0 my-0"><b>{{fm.label_tag}}</b></p> {{fm}} <br>
+                    <p class="m-0 text-left"><b>{{fm.label_tag}}</b></p> {{fm}} <br>
                     {% endfor %}
-                    <button class="px-4 py-1 my-3 vi_btn" style="margin-left: 120px;" type="submit">Buy</button>
+                    <button class="buy_btn py-1" type="submit">Buy</button>
                 </form>
             </div>
     </div>

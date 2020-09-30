@@ -1,0 +1,47 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/addproduct.css' %}">
+{% endblock styles %}
+
+
+{% block title%}Admin{% endblock title%}
+
+{% block content %}
+<div class="container-fluid my-3">
+    <h1 class="mb-4">Welcome To The Admin Page .</h1>
+    <div class="step">
+        <h2>Steps to add product :-</h2>
+
+        <ol class="step_inner">
+            <li>Check the available product category and subcategory.</li>
+            <li>This are the available category.</li>
+            <div class="category">
+                {% for category in categories %}
+                    <span>{{category}} , </span>
+                {% endfor %}
+            </div>
+            <li>This are the available subcategory.</li>
+            <div class="category">
+                {% for subcategory in subcategories %}
+                    <span>{{subcategory}} , </span>
+                {% endfor %}
+            </div>
+            <li>If your product are in this category, then follow the below link and add Subcategory or Product .</li>
+            <a href="{% url 'addsubcategory' %}" class="mx-5 font-weight-bold">Add Subcategory</a>
+            <li>Your product are not in this category or subcategory, the you have to create the appropiate category or
+                subcategory.</li>
+            <li>Use below form to create the appropiate category .</li>
+        </ol>
+    </div>
+
+    <h2 class="mt-5 mx-2">Add Category :- </h2>
+    <!-- {{form1.as_p}} <br> -->
+    <form action="" method="POST" class="my-4 mx-4" novalidate>
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="Add Category">
+    </form>
+</div>
+
+{% endblock content %}

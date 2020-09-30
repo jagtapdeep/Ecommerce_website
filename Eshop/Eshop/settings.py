@@ -105,8 +105,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
+# UTC
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 

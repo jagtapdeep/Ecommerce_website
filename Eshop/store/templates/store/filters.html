@@ -1,0 +1,189 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% load reviews %}
+{% load filter %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/filters.css' %}">
+{% endblock styles %}
+
+
+{% block title%}Category{% endblock title%}
+
+{% block content %}
+
+<div class="container-fluid">
+    <h1 class="p-2">
+        {% if subcate %}
+        {{subcate}}
+        {% else %}
+        {{cate}}
+        {% endif %}
+    </h1>
+    <hr color="black" class="mt-0">
+</div>
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col-12 col-md-3 col-lg-3 p-0 m-0">
+            <form action="">
+                <div class="p-4 boor">
+                    {% if cate|category:'Cloths' %}
+                    <div class="mt-0">
+                        <h4 class="brand_name">Filter By Brand</h4>
+                        <hr color="black" class="mr-1">
+                        <div class="brand_content" style="display: none;">
+                            <input type="checkbox" id="ywc" name="ywc" value="YWC">
+                            <label for="ywc">YWC</label><br>
+                            <input type="checkbox" id="nike" name="nike" value="Nike">
+                            <label for="nike">NIKE</label><br>
+                            <input type="checkbox" id="	Monte Carlo" name="Monte_Carlo" value="Monte Carlo">
+                            <label for="Monte Carlo">Monte Carlo</label><br>
+                            <input type="checkbox" id="Louis Philippe" name="Louis_Philippe" value="Louis Philippe">
+                            <label for="Louis Philippe">Louis Philippe</label><br>
+                            <input type="checkbox" id="	Peter England" name="Peter_England" value="Peter England">
+                            <label for="Peter England"> Peter England</label><br>
+                            <input type="checkbox" id="Allen Solly" name="Allen_Solly" value="Allen Solly">
+                            <label for="Allen Solly">Allen Solly</label><br>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if cate|category:'Electronics' %}
+                    <div class="mt-0">
+                        <h4 class="brand_name">Filter By Brand</h4>
+                        <hr color="black" class="mr-1">
+                        <div class="brand_content" style="display: none;">
+                            <input type="checkbox" id="fastrack" name="fastrack" value="Fastrack">
+                            <label for="fastrack">Fastrack</label><br>
+                            <input type="checkbox" id="tv" name="sony" value="Sony">
+                            <label for="tv">SONY</label><br>
+                            <input type="checkbox" id="samsung" name="samsung" value="Samsung">
+                            <label for="samsung">Samsung</label><br>
+                            <input type="checkbox" id="i_phone" name="iphone" value="I Phone">
+                            <label for="i_phone">I Phone</label><br>
+                            <input type="checkbox" id="realme" name="realme" value="Realme">
+                            <label for="realme">RealMe</label><br>
+                            <input type="checkbox" id="redmi" name="redmi" value="Redmi">
+                            <label for="redmi">Redmi</label><br>
+                        </div>
+                    </div>
+
+                    {% endif %}
+
+                    <!-- <input type="checkbox" id="vehicle1">
+                        <label>{{brand}}</label><br> -->
+
+
+
+                    <div class="mt-5">
+                        <h4 class="filter_name">Filter By Rating</h4>
+                        <hr color="black" class="mr-1">
+                        <div class="filter_content" style="display: none;">
+                            <input type="checkbox" id="vehicle1" name="four" value="4">
+                            <label for="vehicle1"> 4 star & above</label><br>
+                            <input type="checkbox" id="vehicle1" name="three" value="3">
+                            <label for="vehicle2"> 3 star & above</label><br>
+                            <input type="checkbox" id="vehicle1" name="two" value="2">
+                            <label for="vehicle3"> 2 star & above</label><br>
+                            <input type="checkbox" id="vehicle1" name="one" value="1">
+                            <label for="vehicle3"> 1 star & above</label><br>
+                        </div>
+                    </div>
+
+                    <div class="mt-5">
+                        <h4 class="offer_name">Filter By Offer</h4>
+                        <hr color="black" class="mr-1">
+                        <div class="offer_content" style="display: none;">
+                            <label for="offer">Offer :-</label>
+                            <input type="number" class="in_con" max="99" min="1" name="offer" id="offer">
+                        </div>
+                    </div>
+                    <input class="buttons bg-white px-5" type="submit" value="Apply">
+                </div>
+            </form>
+            <!-- <div class="filter">
+                <div class="mt-0">
+                    <h4 class="brand_name">Filter By Brand</h4>
+                    <hr color="black">
+                    <div class="brand_content">
+                        <input type="checkbox" id="ywc" name="ywc" value="YWC">
+                        <label for="ywc">YWC</label><br>
+                        <input type="checkbox" id="nike" name="nike" value="Nike">
+                        <label for="nike">NIKE</label><br>
+                        <input type="checkbox" id="	Monte Carlo" name="Monte_Carlo" value="Monte Carlo">
+                        <label for="Monte Carlo">Monte Carlo</label><br>
+                        <input type="checkbox" id="Louis Philippe" name="Louis_Philippe" value="Louis Philippe">
+                        <label for="Louis Philippe">Louis Philippe</label><br>
+                        <input type="checkbox" id="	Peter England" name="Peter_England" value="Peter England">
+                        <label for="Peter England"> Peter England</label><br>
+                        <input type="checkbox" id="Allen Solly" name="Allen_Solly" value="Allen Solly">
+                        <label for="Allen Solly">Allen Solly</label><br>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        <div class="col-12 col-md-9 col-lg-9 p-0 m-0">
+            <div class="product">
+                <div class="row m-0 p-0">
+                    <div class="card_outer"> 
+                    {% if products %}
+                    {% for product in products %}      
+                        <div class="card my-5 p-2">
+                            <img src="{{product.images.url}}" class="card-img-top card_img p-3 mx-auto" alt="Product Image">
+                            <div class="card-body">
+                                <h5 class="card-title">{{product.name}}</h5> <br>
+                                <h3 style="font-family: serif;">Price :- ₹ {{product.price|offer_price:product.offer}}</h3>
+                                <p class="card-text">{{product.description}}</p> <br>
+                                <div class="button_group">
+                                    <a href="{% url 'addtocart' product.id %}" class="buttons">Add To Cart</a>
+                                    <a href="{% url 'productview' product.id %}" class="buttons">View Product</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                    </div>
+                        <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 100%; height: 70vh;">
+
+                            <img src="{% static 'images/question.jpg' %}" alt="No Result Found" srcset="" style="width: 30%;">
+                            <h3 class="mt-3 text-danger mx-2 text-center" >Sorry, no results found!</h3>
+                        </div>
+                        {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="up" onclick="topfunction()">
+    <button><i class="fas fa-arrow-up"></i></button>
+</div>
+
+{% endblock content %}
+
+{% block script %}
+
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
+
+<script src="{% static 'javascript/filter.js' %}"></script>
+
+<script>
+    var myUp = document.querySelector(".up");
+
+    addEventListener("scroll", () => {
+        if (window.pageYOffset > 100) {
+            myUp.classList.add("up_scroll")
+        } else {
+            myUp.classList.remove("up_scroll")
+        }
+    })
+
+
+    function topfunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+</script>
+
+{% endblock script %}

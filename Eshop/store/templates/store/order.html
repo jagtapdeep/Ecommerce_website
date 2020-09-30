@@ -15,7 +15,34 @@
         background-color: rgb(236, 96, 2);
     }
     .bor_bot{
+        font-weight: bold;
+        border-bottom: 1px solid rgb(224, 224, 224);
+    }
+    th{
         border-bottom: 2px solid black;
+        border-top: 2px solid black; 
+    }
+    .tr_row:hover{
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+    tbody tr a{
+        border: 1px solid black;
+        padding: 2px 25px;
+        text-decoration: none;
+        color: black;
+        transition: 1s;
+    }
+    tbody tr a:hover{
+        background-color: black;
+        color: white;
+        text-decoration: none;
+    }
+    .nothing_img{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        flex-direction: column;
     }
 </style>
 
@@ -39,18 +66,18 @@
                         <th style="border-bottom: 2px solid black; border-top: 2px solid black; " >Product Name</th>
                         <th style="border-bottom: 2px solid black; border-top: 2px solid black; " >Quantity</th>
                         <th style="border-bottom: 2px solid black; border-top: 2px solid black; " >Total Price</th>
-                        <th style="border-bottom: 2px solid black; border-top: 2px solid black; " >View</th>
+                        <th style="border-bottom: 2px solid black; border-top: 2px solid black; " >Product Receipt</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for product in products %}
                     {% if nm|condition:product.customer %}
-                    <tr style="text-align: center;">
+                    <tr class="tr_row text-center pt-3">
                         <td class="bor_bot">{{product.date}}</td>
                         <td class="bor_bot">{{product.product}}</td>
                         <td class="bor_bot">{{product.quantity}}</td>
-                        <td class="bor_bot"> ₹ {{product.price|offer_price:product.offer}}</td>
-                        <td class="bor_bot"><a href="{% url 'pdf' product.id %}" type="button" class="mx-0 m1-2 pt-1 px-4 vi_btn"
+                        <td class="bor_bot"> ₹ {{product.price}}</td>
+                        <td class="bor_bot"><a href="{% url 'pdf' product.id %}" type="button"
                             >Receipt</a>
                             <!-- <a href="{% url 'productview' product.order_id %}" class="btn n py-1">View Product</a></td> -->
                     </tr>
@@ -64,13 +91,10 @@
     </div>
     {% else %}
     <div class="container">
-        <div class="mx-auto m-5 " style="width: 400px;">
+        <div class="mx-auto nothing_img">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Shopping_cart_with_food_clip_art_2.svg/307px-Shopping_cart_with_food_clip_art_2.svg.png"
                 alt="">
-        </div>
-        <div class="mx-auto" style="width: 400px;">
-
-            <h1>Nothing In Order</h1>
+            <h1 class="pt-4 text-danger">Nothing In Cart</h1>
         </div>
     </div>
 </div>

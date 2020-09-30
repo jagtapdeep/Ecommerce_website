@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block styles %}
-<link rel="stylesheet" href="{% static 'css/signup.css' %}">
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
 {% endblock styles %}
 
 {% block title%}Profile{% endblock title%}
@@ -10,30 +10,36 @@
 {% block content %}
 
 {% if messages %}
-    {% for message in messages %}
-    <div class="alert alert-success" role="alert">
-        {{message}}
-      </div>
-    {% endfor %}
+{% for message in messages %}
+<div class="alert alert-success" role="alert">
+    {{message}}
+</div>
+{% endfor %}
 {% endif %}
 <div class="container">
     {% if error_message %}
-        <div class="alert alert-danger" role="alert">
-            {{error_message}}
-        </div>
+    <div class="alert alert-danger" role="alert">
+        {{error_message}}
+    </div>
     {% endif %}
-    <div class="flex-container">
-            <div class="py-5">
-                <form action="" method="post">
+    <div class="container">
+        <div class="main_div">
+            <div class="box text-center">
+                <!-- <img src="{% static 'images/user.png' %}" alt="" srcset="" class="profile_img"> -->
+                <h1 class="text-white mb-5">Profile</h1>
+                <form action="" method="POST" class="mt-5" autocomplete="off">
                     {% csrf_token %}
-                    <h3 class="head_log ml-5 pl-5">PROFILE</h3>
                     {% for fm in form %}
-                    <p class="mx-3 p-0 my-0"><b>{{fm.label_tag}}</b></p> {{fm}} <br>
+                    <div class=" inputbox">
+                        {{fm}}
+                        {{fm.label_tag}}
+                    </div>
                     {% endfor %}
-                    <button class="px-4 py-1 my-3 vi_btn" style="margin-left: 20px;" type="submit">Update</button>
-                    <a href="{% url 'changepass1' %}" class="px-4 py-2 my-3 mx-4 vi_btn">Reset Password</a>
+                    <a href="{% url 'changepass1' %}">Reset Password</a>
+                    <input type="submit" value="Update">
                 </form>
             </div>
+        </div>
     </div>
 </div>
 

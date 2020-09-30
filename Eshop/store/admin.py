@@ -7,7 +7,7 @@ from .models.review import Review
 # Register your models here.
 @admin.register(Product)
 class AdminProduct(admin.ModelAdmin):
-    list_display = ['id','name','price','description','quantity','offer','rating','review_count','battery','brand']
+    list_display = ['id','name','price','description','quantity','offer','rating','review_count','brand','category','subcategory']
 
 @admin.register(Category)
 class AdminCategory(admin.ModelAdmin):

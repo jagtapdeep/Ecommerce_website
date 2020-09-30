@@ -1,0 +1,87 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box!important;
+    scroll-behavior: smooth;
+}
+.filter{
+    background-color: red;
+    width: 100%;
+}
+.card{
+    border: none;
+}
+.card_img{
+    border: 1px solid black;
+    width: 250px;
+    height: 230px;
+}
+.card-body{
+    width: 280px;
+    position: relative;
+}
+.button_group{
+    position: absolute;
+    bottom: 0;
+}
+.card-title{
+    font-weight: 400;
+}
+.buttons{
+    padding: 4px 10px;
+    text-decoration: none;
+    color: black;
+    border: 1px solid black;
+    margin-top: 10px;
+    display: inline-block;
+    transition: 1s;
+    margin-right: 5px;
+}
+.buttons:hover{
+    background-color: black!important;
+    color: white;
+    text-decoration: none;
+}
+.card_outer{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.up{
+    position: fixed;
+    right: 2%;
+    bottom: 0%;
+    opacity: 0;
+    transition: 1s ease all;
+}
+.up_scroll{
+    opacity: 1;
+    bottom: 5%;
+}
+.up button{
+    border-radius: 50%;
+    padding: 5px 10px;
+    background-color: black;
+    color: white;
+    border: none;
+    outline: none;
+}
+.offer_name,.brand_name,.filter_name{
+    font-weight: bold;
+    cursor: pointer;
+    display: inline;
+}
+.brand_content input, label{
+    font-weight: bolder;
+}
+.in_con{
+    border: 2px solid white;
+    border-bottom: 2px solid black;
+    width: 80%;
+    outline: none;
+    padding: 5px 10px;
+}
+.result_img{
+    width: 20px;
+}

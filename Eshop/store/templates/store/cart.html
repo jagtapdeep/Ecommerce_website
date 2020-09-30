@@ -15,7 +15,20 @@
     }
 
     .bor_bot {
-        border-bottom: 2px solid black;
+        border-bottom: 1px solid  rgb(224, 224, 224);
+    }
+    .tr_row{
+        text-align: center;
+    }
+    .tr_row:hover{
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+    .nothing_img{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 90vh;
+        flex-direction: column;
     }
 </style>
 
@@ -28,7 +41,7 @@
 <div class="table-responsive">
     <div class="container">
         <div class="mx-4 my-5">
-            <div class="ml-4 pl-4  mt-5 mb-4">
+            <div class="ml-5 pl-5  mt-5 mb-4">
                 <h1>Your Cart</h1>
             </div>
             <table class="table mx-auto" style="width: 900px;">
@@ -47,7 +60,7 @@
                     {% for i in usercarts %}
                     {% for usercart,vaue in i.items %}
                     {% if product.id == usercart|to_int %}
-                    <tr style="text-align: center;">
+                    <tr class="tr_row">
                         <td class="bor_bot"><img src="{{product.images.url}}" alt="" style="width: 50px; height: 50px;"
                                 class="rounded-circle"></td>
                         <td class="bor_bot pt-4">{{product.name}}</td>
@@ -58,7 +71,7 @@
                         <td class="bor_bot pt-4"><a href="{% url 'order' product.id %}" type="button"
                                 class="mx-0 m1-2 pt-1 px-4 vi_btn">Buy</a></td>
                         {% else %}
-                        <td class="bor_bot">Out Of Stock</td>
+                        <td class="bor_bot pt-4 text-danger">Out Of Stock</td>
                         {% endif %}
                     </tr>
                     {% endif %}
@@ -73,13 +86,10 @@
 </div>
 {% else %}
 <div class="container">
-    <div class="mx-auto m-5 " style="width: 400px;">
+    <div class="mx-auto nothing_img">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Shopping_cart_with_food_clip_art_2.svg/307px-Shopping_cart_with_food_clip_art_2.svg.png"
             alt="">
-    </div>
-    <div class="mx-auto" style="width: 400px;">
-
-        <h1>Nothing In Cart</h1>
+        <h1 class="pt-4 text-danger">Nothing In Cart</h1>
     </div>
 </div>
 {% endif %}
