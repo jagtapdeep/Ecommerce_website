@@ -397,30 +397,22 @@ def user_cart(request):
     return render(request,'store/cart.html',{'usercarts':q,'products':products,'categories':category, 'subcates':subcates})
     
 def search(request):
-    search_product = []
     category = Category.objects.all()
     search = request.GET.get('search')
-    print('search',search)
+    print(search)
     if search:
-        for i in search:
-            match = Product.objects.filter(Q(name__icontains=i)|Q(description__icontains=i))
-            if len(search_product) == 0:
-                print(len(search_product))
-                for l in match:
-                    search_product.append(l)
-                print(len(search_product))
-            # else:
-            #     for j in search_product:
-            #         for k in match:
-            #             if j == k:
-            #                 pass
-            #             else:
-            #                 search_product.append(k)
-            print(search_product)
-        return render(request,'store/search.html',{'products':search_product,'categories':category, 'subcates':subcates})
+        match = Product.objects.filter(Q(name__icontains=search)|Q(description__icontains=search))
+        print(match)
+        # perform AND operation
+        # match = Product.objects.filter(name__icontains=search).filter(description__icontains=search)
+        if match:
+            return render(request,'store/search.html',{'products':match,'categories':category,'subcates':subcates})    
+        else:
+            content = 'No Result Found'
+            return render(request,'store/search.html',{'contents':content,'categories':category,'subcates':subcates})
     else:
         content = 'Please Enter Something in Search Box'
-        return render(request,'store/search.html',{'content':content,'categories':category, 'subcates':subcates})
+        return render(request,'store/search.html',{'content':content,'categories':category,'subcates':subcates})
 
 def order(request,id):
     category = Category.objects.all()
