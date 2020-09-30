@@ -77,8 +77,8 @@
                         <td class="bor_bot">{{product.product}}</td>
                         <td class="bor_bot">{{product.quantity}}</td>
                         <td class="bor_bot"> ₹ {{product.price}}</td>
-                        <td class="bor_bot"><a href="{% url 'pdf' product.id %}" type="button"
-                            >Receipt</a>
+                        <td class="bor_bot"><a href="{% url 'productview' product.order_id %}" type="button"
+                            >View Product</a>
                             <!-- <a href="{% url 'productview' product.order_id %}" class="btn n py-1">View Product</a></td> -->
                     </tr>
 
