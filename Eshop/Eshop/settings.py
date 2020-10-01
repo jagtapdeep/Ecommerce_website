@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'wp(-g3-hq5env$3@o(byvw)&p&se$cs)fl74qi!(c%x0pgi2q_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ecommerce-site57.herokuapp.com','localhost:8000']
 
 
 # Application definition
